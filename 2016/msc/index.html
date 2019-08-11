@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>More on Symmetric Ciphers</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/serif.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          ##More on Symmetric Ciphers
+
+          廖子慶  
+          2016/07/27 <!-- .element: align="right" -->
+
+          ---
+
+          ##Double DES
+          $C=E(K\_2,E(K\_1,P))$
+
+          --
+
+          ##Reduction to a Single Stage
+
+          $E(K\_{2},E( K\_{1},P ))=E(K_{3},P)$
+
+          假設錯誤 <!-- .element: class="fragment" -->
+
+          --
+
+          ##Meet-in-the-Middle Attack
+
+          $C=E(K\_{2},E(K\_{1},P))$
+
+          $X=E(K\_{1},P)=D(K\{2},P)$
+
+          ---
+
+          ##Triple DES with Two Keys
+          $C=E(K\_1,D(K\_2,E(K\_1,P)))$
+
+          --
+
+
+          ##安全性
+
+          $2^{112}\approx 5*10^{23}$
+
+          --
+
+          ##Known-Plaintext Attack on Triple DES
+
+          ![](./1.jpg)
+
+          ---
+
+          ##Triple DES with Three Keys
+
+          $C=E(K\_3,D(K\_2,E(K\_1,P)))$
+
+          --
+
+          ##安全性
+
+          $2^{168}$
+
+          ---
+
+          ##Block Cipher Modes of Operation
+
+          --
+
+          ##ECB
+          ![](./2.jpg)
+
+          --
+
+          ##CBC
+          ![](./3.jpg)
+
+          --
+
+          ##CFB
+          ![](./4.jpg) <!-- .element: width="80%" -->
+
+          --
+
+          ##OFB
+          ![](./5.jpg) <!-- .element: width="80%" -->
+
+          --
+
+          ##CTR
+          ![](./6.jpg)
+
+          ---
+
+          ##Stream Ciphers Structure
+          ![](./7.jpg)
+
+          --
+
+          ###Speed Comparisons of Symmetric Ciphers on a Pentium II
+
+          | Cipher | Key Length | Spped (Mbps) |
+          |  ---   |    ---     |     ---      |
+          |  DES   |     56     |      9       |
+          |  3DES  |    168     |      3       |
+          |  RC2   |  variable  |     0.9      |
+          |  RC4   |  variable  |      45      |
+
+          ---
+
+          ##The RC4 Algorithm
+
+          --
+
+          ##Initalization of S
+
+          ```c
+          /* Initialization */
+          for  i = 0 to 255 do
+              S[i] = i;
+              T[i] = K[i mod keylen];
+          ```
+
+          ```c
+          /* Initial Permutation of S */
+          j = 0;
+          for  i = 0 to 255 do
+              j = (j + S[i] + T[i]) mod 256;
+              Swap (S[i], S[j]);
+          ```
+
+          --
+
+          ##Stream Generation
+
+          ```c
+          /* Stream Generation */
+          i, j = 0;
+          while (true)
+              i = (i + 1) mod 256;
+              j = (j + S[i]) mod 256;
+              Swap (S[i], S[j]);
+              t = (S[i] + S[j]) mod 256;
+              k = S[t];
+          ```
+
+          --
+
+          ![](./8.jpg)
+
+          --
+
+          ##Strength of RC4
+
+          * WEP protocol is vunlnerable.
+          * The probloem is not with RC4 itself.
+          * But the way in which key are generated for use as input to RC4.
+
+          --
+
+          ##補充(wiki)
+
+          2015年，比利時魯汶大學的研究人員Mathy Vanhoef及Frank Piessens，公布了針對RC4加密演算法的新型攻擊程式，可在75小時內取得cookie的內容。
+
+          ---
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+        math: {
+            mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+            config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+        },
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/math/math.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

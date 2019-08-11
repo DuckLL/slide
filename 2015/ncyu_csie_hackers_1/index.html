@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>NCYU_CSIE_Hackers</title>
+    <meta content='A framework for easily creating beautiful presentations using HTML' name='description'>
+    <meta content='Hakim El Hattab' name='author'>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../css/reveal.css' rel='stylesheet'>
+    <link href='../css/theme/white.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section>
+          <section>
+            <h1>雲端資訊安全</h1>
+            <h1>-深入淺出資訊安全</h1>
+            <p>2015.10.15</p>
+            <p>廖子慶</p>
+          </section>
+          <section>
+            <ol>
+              <li>資安=駭客?-了解資訊安全</li>
+              <li>第一次破解就上手-實作與講解</li>
+              <li>第一次破解就上癮-技巧示範</li>
+            </ol>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>駭客？</h1>
+            <h1>資訊安全？</h1>
+          </section>
+          <section>
+            <h1>Hacker</h1>
+            <h1>v.s.</h1>
+            <h1>Cracker</h1>
+          </section>
+          <section>
+            <h1>Windows</h1>
+            <h1>OSX</h1>
+            <h1>Linux</h1>
+          </section>
+          <section>
+            <h2>c/c++</h2>
+            <h2>java</h2>
+            <h2>perl</h2>
+            <h2>python</h2>
+            <h2>ruby</h2>
+          </section>
+          <section>
+            <h1>php</h1>
+            <h1>asp</h1>
+            <h1>node.js</h1>
+          </section>
+          <section>
+            <h1>android</h1>
+            <h1>ios</h1>
+          </section>
+          <section>
+            <h1>arduino</h1>
+            <h1>Raspberry Pi</h1>
+          </section>
+          <section>
+            <h1>想要成爲駭客只需要精通一門</h1>
+          </section>
+          <section>
+            <h1>但想要成爲資安專家就要樣樣精通</h1>
+          </section>
+          <section>
+            <h3>資訊安全的特殊性(ref:bambofox)</h3>
+            <ol>
+              <li class='fragment'>
+                <p style='color:#f00;'>
+                  快速演進
+                  <ul>
+                    <li>任何新技術，都可能有資安方面的問題</li>
+                    <li>資安研究需要快速瞭解吸收新知</li>
+                  </ul>
+                </p>
+              </li>
+              <li class='fragment'>
+                <p style='color:#f00;'>
+                  與系統高度相關
+                  <ul>
+                    <li>資安技術無法單獨存在，皆須依賴所針對的系統，如：網站，機器</li>
+                    <li>資安研究需要精通所針對的系統</li>
+                  </ul>
+                </p>
+              </li>
+              <li class='fragment'>
+                <p style='color:#f00;'>
+                  木桶理論
+                  <ul>
+                    <li>系統安全性取決於安全層級最弱的一環</li>
+                    <li>資安研究員需要全面性分析系統安全性</li>
+                  </ul>
+                </p>
+              </li>
+            </ol>
+          </section>
+          <section>
+            <h1>
+              <p style='color:#f00;'>
+                破壞性思維
+              </p>
+            </h1>
+            <ul>
+              <li>攻擊者思維方式與程式設計師不同</li>
+              <li>資安研究員需要瞭解攻擊者的手法</li>
+            </ul>
+          </section>
+          <section>
+            <h1>Orange:</h1>
+            <p>看一個人是否適合做安全技術研究，</p>
+            <p>主要看三點，按重要程度排序就是：</p>
+            <p style='color:#f00;'>思路靈活、興趣濃厚、基礎紮實。</p>
+            <ol>
+              <li>思路最重要，因為這個很難培養。</li>
+              <li>基礎也很重要，但這是三點中唯一可以通過勤奮來彌補的。</li>
+              <li>
+                把興趣排在第二，是因為有些人可能沒接觸過，不知道自己對這個有興趣，
+                <span style='color:#aaa;'>類似「不試試怎麼知道自己不喜歡男生」。</span>
+              </li>
+            </ol>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>我們先把資安簡單分類一下</h1>
+          </section>
+          <section>
+            <h1>電腦</h1>
+            <ol>
+              <li>
+                Windows
+              </li>
+              <li>
+                OSX
+              </li>
+              <li>
+                Linux
+                <ol>
+                  <li>漏洞發覺、利用(Explorer, DLL Injection)</li>
+                  <li>惡意程式分析(病毒、木馬、蠕蟲)</li>
+                  <li>遊戲外掛程式</li>
+                </ol>
+              </li>
+            </ol>
+          </section>
+          <section>
+            <h1>手機</h1>
+            <ol>
+              <li>
+                Android
+              </li>
+              <li>
+                iOS
+                <ol>
+                  <li>跟電腦差不多</li>
+                  <li>重點：隱私資料搜集</li>
+                </ol>
+              </li>
+            </ol>
+          </section>
+          <section>
+            <h1>跨平台</h1>
+            <ol>
+              <li>
+                Web
+                <ol>
+                  <li>SQL Injection</li>
+                  <li>XSS</li>
+                  <li>Fileupdate</li>
+                  <li>Remote Access Terminal</li>
+                </ol>
+              </li>
+              <li>
+                各種程式語言
+                <ol>
+                  <li>程式撰寫漏洞(BOF, UAF)</li>
+                  <li>Jump out the sandbox.</li>
+                </ol>
+              </li>
+            </ol>
+          </section>
+          <section>
+            <h1>密碼學</h1>
+            <ol>
+              <li>對稱式加密(AES)</li>
+              <li>非對稱式加密(RSA)</li>
+              <li>雜湊(MD5)</li>
+              <li>數論、幾何</li>
+            </ol>
+          </section>
+          <section>
+            <h1>數位鑑識</h1>
+            <ol>
+              <li>封包分析</li>
+              <li>破解壓縮擋</li>
+              <li>憑證存取</li>
+              <li>資料隱藏</li>
+            </ol>
+          </section>
+          <section>
+            <h2>其實很多種狀況是要Combo的</h2>
+            <p>利用sqlinjection登入，找到一個任意upload的地方，利用系統漏洞提權，成功取得後門</p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>該如何起手呢</h1>
+          </section>
+          <section>
+            <h3>學習面向(ref:bambofox)</h3>
+            <ol>
+              <li>系統化學習</li>
+              <ul>
+                <li>
+                  <span style='color:#f00;'>課程</span>
+                  幫助你快速了解一門學問
+                </li>
+                <li>
+                  <span style='color:#f00'>讀書</span>
+                  讓你有系統的看見一門學科的全貌
+                </li>
+              </ul>
+              <li>深入學習</li>
+              <ul>
+                <li>
+                  <span style='color:#f00'>新聞</span>
+                  及技術文章讓你初步接觸最新的研究發展
+                </li>
+                <li>
+                  <span style='color:#f00'>論文</span>
+                  深入探討最新的研究
+                </li>
+              </ul>
+              <li>實作技術練習</li>
+              <ul>
+                <li>
+                  <span style='color:#f00'>練習</span>
+                  讓你真正了解體會這門學科
+                </li>
+                <li>
+                  <span style='color:#f00'>競賽</span>
+                  提升你的程度，讓你有機會突破自己的極限
+                </li>
+              </ul>
+            </ol>
+          </section>
+          <section>
+            <h1 style='color:#f00'>重點在自學</h1>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>最快的學習方式-CTF</h1>
+          </section>
+          <section>
+            <h1>What is CTF?</h1>
+            <p class='fragment'>Capture The Flag</p>
+          </section>
+          <section>
+            <h1>題型</h1>
+            <ol>
+              <li>Web</li>
+              <li>Binary</li>
+              <li>Crypto</li>
+              <li>Pwn</li>
+              <li>Misc</li>
+            </ol>
+          </section>
+          <section>
+            <h1>比賽種類</h1>
+            <ol>
+              <li>Jeopardy</li>
+              <li>Attack & Defense</li>
+              <li>King of Hill</li>
+            </ol>
+          </section>
+          <section>
+            <h2>Jeopardy</h2>
+            <img data-src='2.png'>
+          </section>
+          <section>
+            <h1>多人線上</h1>
+            <h2>解題</h2>
+            <h3>HITCON CTF, Defcon CTF Quals</h3>
+          </section>
+          <section>
+            <h2>Attack & Defense</h2>
+            <img data-src='3.jpg'>
+          </section>
+          <section>
+            <h1>少隊內網連接</h1>
+            <h2>保護自己、攻擊別人</h2>
+            <h3>Defcon CTF Fianl, 台交攻防賽</h3>
+          </section>
+          <section>
+            <h2>King of Hill</h2>
+            <img data-src='4.png'>
+          </section>
+          <section>
+            <h1>少隊內網連接</h1>
+            <h2>一起打好幾台機器</h2>
+            <h3>Honeyme, Seccon CTF</h3>
+          </section>
+          <section>
+            <h1>Why ctf?</h1>
+          </section>
+          <section>
+            <p>Tyler: If you like security, just play ctf!</p>
+            <img data-src='tyler.jpg'>
+          </section>
+          <section>
+            <h1>CTF網站</h1>
+            <ul>
+              <li>
+                <a href='http://ctf.lobsiinvok.pw/' target='_blank'>中山大學</a>
+              </li>
+              <li>
+                <a href='http://secprog.cs.nctu.edu.tw/' target='_blank'>交通大學</a>
+              </li>
+              <li>
+                <a href='https://www.hackthissite.org/' target='_blank'>HackThisSite</a>
+              </li>
+              <li>
+                <a href='http://captf.com/practice-ctf/' target='_blank'>有人好心整理了一個List</a>
+              </li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>不知道怎麼開始？</h1>
+          </section>
+          <section>
+            <img data-src='1.png'>
+          </section>
+          <section>
+            <h1>當然是看實況呀</h1>
+            <p class='fragment'>不過通常是Write Up拉</p>
+          </section>
+          <section>
+            <h1>菁英級</h1>
+            <p style='color:orange'>orange (web)</p>
+            <p>x43x61x69(Zhi-Wei Cai) (web osx)</p>
+          </section>
+          <section>
+            <h1>大師級</h1>
+            <p>ddaa</p>
+            <p>atdog</p>
+            <p>jeffxx</p>
+            <p>dm4</p>
+            <p>hwchen18546</p>
+            <p>angelboy</p>
+            <p>sean (bin)</p>
+            <p>l4ys</p>
+          </section>
+          <section>
+            <h1>鑽石級</h1>
+            <p>bruce30262 (bin)</p>
+            <p>steven5538</p>
+            <p>inndy (new star)</p>
+            <p>adr (windows)</p>
+          </section>
+          <section>
+            <h1>戰隊</h1>
+            <p>217</p>
+            <p>bambofox</p>
+            <p>hst.tw</p>
+            <p>NSYSU CTF</p>
+            <p>UCCU</p>
+          </section>
+          <section>
+            <h1>網站</h1>
+            <p>烏雲</p>
+            <p>Hacknews</p>
+            <p>kb.hitcon</p>
+            <p>91Ri.org</p>
+            <p>freebuf.com</p>
+          </section>
+          <section>
+            <h1>FB</h1>
+            <h1>Blog</h1>
+            <h1>Github</h1>
+          </section>
+          <section>
+            <h1 style='color:#f00;'>RSS</h1>
+            <p>is the powerful tool!</p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>除了實況還可以</h1>
+            <h1 style='color:#f00;'>看武功秘笈</h1>
+          </section>
+          <section>
+            <h1>基礎心法</h1>
+            <ol>
+              <li>Linux</li>
+              <li>C++</li>
+              <li>Python</li>
+              <li>PHP</li>
+            </ol>
+          </section>
+          <section>
+            <h1>Web</h1>
+            <p>網路竟然這麼危險！</p>
+            <p>Web 2.0 駭客技術揭密</p>
+          </section>
+          <section>
+            <h1>Binary</h1>
+            <p>加密與解密</p>
+            <p>逆向工程核心原理</p>
+          </section>
+          <section>
+            <h1>Crypto</h1>
+            <p>Cryptography and Network Security</p>
+            <p>請去修資訊安全</p>
+          </section>
+          <section>
+            <h1>Pwn</h1>
+            <p>0day安全</p>
+            <p>Hacking: The Art of Exploitation</p>
+            <p>Kali Linux滲透測試工具</p>
+            <a href='http://securityalley.blogspot.tw/2014/06/buffer-overflow-windows.html' target='_blank'>BOF</a>
+          </section>
+          <section>
+            <h1>Misc</h1>
+            <p>ACM</p>
+            <p>提升程式設計的解題思考力</p>
+          </section>
+        </section>
+        <section>
+          <h1>還有一個很棒的方法</h1>
+          <div class='fragment'>
+            <p>參加各式研討會</p>
+            <p>HITCON, HoneyCon ...</p>
+            <p>參加各種 公開 社群</p>
+            <p>TDOH, HST, RAT ...</p>
+          </div>
+        </section>
+        <section>
+          <h1>中場休息 10min</h1>
+        </section>
+        <section>
+          <section>
+            <h1>實作WEB題</h1>
+          </section>
+          <section>
+            <p style='font-size:250%;'>SQL injection</p>
+          </section>
+          <section>
+            <h1>首先要知道SQL是什麼</h1>
+            <p>一個動態網站通常都會需要資料庫</p>
+            <p>用來管理會員資料、商品資訊...</p>
+            <p>而資料庫使用的程式語言通稱為SQL</p>
+          </section>
+          <section>
+            <h1>介紹重要指令</h1>
+            <ul>
+              <li>
+                動作
+                <ol>
+                  <li>SELECT</li>
+                  <li>INSERT</li>
+                  <li>DELETE</li>
+                </ol>
+              </li>
+              <li>介詞 FROM</li>
+              <li>過濾運算 WHERE</li>
+              <li>註解 --</li>
+            </ul>
+            <pre><code>SELECT * FROM member WHERE id='admin' and pass='123456' -- &lt;(_ _)&gt;</code></pre>
+          </section>
+          <section>
+            <p>SQL injection是怎麼發生的</p>
+            <pre><code>IF(SELECT * FROM member WHERE id='[arg1]' and pass='[arg2]') //有查到東西&#x000A;  login_seccess([arg1]); //登入成功&#x000A;else&#x000A;  login_error(); //登入失敗</code></pre>
+          </section>
+          <section>
+            <p>正常情況應該是這樣</p>
+            <p>arg1=admin arg2=123456</p>
+            <pre><code>IF(SELECT * FROM member WHERE id='admin' and pass='123456') //有查到東西</code></pre>
+            <p>但駭客就是不正常?!</p>
+            <p>arg1=admin arg2='or'1'='1</p>
+            <pre><code>IF(SELECT * FROM member WHERE id='admin' and pass=''or'1'='1') //也有查到東西</code></pre>
+          </section>
+          <section>
+            <h1>注意到什麼了嘛!</h1>
+            <pre><code style='font-size:120%;'>WHERE id='admin' and pass=''or'1'='1'&#x000A;'1'='1'//恆成立&#x000A;true and false or true // true!!!</code></pre>
+            <div class='fragment'>
+              <p>我根本不需要知道密碼啊</p>
+              <img data-src='haha.jpg' width='30%'>
+            </div>
+          </section>
+          <section>
+            <h1>DEMO</h1>
+            <a href='http://duckliao.lionfree.net/sqlinjection' target='_blank'>
+              site
+            </a>
+          </section>
+          <section>
+            <h1>Your time</h1>
+            <a href='http://duckliao.lionfree.net/sqlinjection' target='_blank'>
+              http://duckliao.lionfree.net/sqlinjection
+            </a>
+            <ol>
+              <li>Basic: Try to login the site.</li>
+              <li>Advance: Get the "message" of admin(this is hard).</li>
+              <li style='color:#f00;'>Don't delete the admin acount</li>
+            </ol>
+          </section>
+        </section>
+        <section>
+          <h1>中場休息 10min</h1>
+        </section>
+        <section>
+          <section>
+            <h1>數位鑑識</h1>
+          </section>
+          <section>
+            <h1>檔案辨識</h1>
+            <h2>file</h2>
+          </section>
+          <section>
+            <h1>破解壓縮檔(明文攻擊)</h1>
+            <h2>pkcrack</h2>
+          </section>
+          <section>
+            <h1>靜態分析</h1>
+            <h2>IDA Pro</h2>
+          </section>
+          <section>
+            <h1>動態分析</h1>
+            <h2>Immunity Debug</h2>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>讀書會之後的發展</h1>
+          </section>
+          <section>
+            <h1>時間：</h1>
+            <ol>
+              <li>星期四晚上 17:30~20:30</li>
+              <li>星期六早上 9:00~12:00</li>
+            </ol>
+          </section>
+          <section>
+            <h1>三人一組</h1>
+            <ol>
+              <li>Web - 調查:whois, directory traversal 攻擊:sqlmap XSS</li>
+              <li>Binary - IDA-Pro, Immunity Debug</li>
+              <li>Misc - Wireshark, Burp Suite</li>
+              <li>PWN - gdb, BufferOverFlow, ShellCode</li>
+              <li>Crypto - AES, RSA, MD5</li>
+              <li>NCYU-CTF</li>
+            </ol>
+            <p style='color:#f00;'>注重工具上的操作</p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>最後...</h1>
+          </section>
+          <section>
+            <h1>台灣是有法律的</h1>
+            <a href='http://homepage.vghtpe.gov.tw/~ged/top2/top2_31.htm'>詳見刑法358~363</a>
+          </section>
+          <section>
+            <h1 class='fragment fade-out'>駭客不是當一個壞人</h1>
+            <h1 class='fragment'>駭客是一種精神</h1>
+          </section>
+        </section>
+        <section>
+          <h1>END</h1>
+          <p>謝謝大家</p>
+        </section>
+      </div>
+    </div>
+    <script src='../lib/js/head.min.js'></script>
+    <script src='../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+      	progress: true,
+      	history: true,
+      	center: true,
+      
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+      
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

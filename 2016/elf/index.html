@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>ELF</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/night.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          #ELF
+
+          廖子慶  
+          2016/03/28 <!-- .element: align="right" -->
+
+          ---
+
+          ##Executable and Linkable Format
+
+          --
+
+          ##簡單一句話就是可執行擋
+          ##like .exe in Windows
+
+          --
+
+          ##接下來要介紹幾個工具
+
+          ---
+
+          #file
+
+          --
+
+          ![](./x64.jpg)
+
+          x64
+
+          ![](./arm.jpg)
+
+          arm
+
+          ![](./static.jpg)
+
+          static link
+
+          ---
+
+          #objdump
+
+          --
+
+          #反組譯成組合語言
+          ```sh
+          objdump -M intel -d ./vul > dump
+          ```
+
+          ---
+
+          #proc
+
+          --
+
+          #抓取執行區段表
+          ```sh
+          cat /proc/`pidof vul`/maps
+          ```
+
+          --
+
+          ![](./normal.jpg)
+
+          normal
+
+          ![](./static2.jpg)
+
+          static link
+
+          --
+
+          ![](./depoff.jpg)
+
+          DEP off(execstack)
+
+          ---
+
+          #trace
+
+          --
+
+          #strace
+          看call了哪些system function
+
+          --
+
+          #ltrace
+          看call了哪些program function
+
+          ---
+
+          #readelf
+
+          --
+
+          | option | descript |
+          |  ---   |   ---    |
+          |   -a   | -h -l -S -s -r -d -V -A -I |
+          |   -h   |        File header         |
+          |   -l   |      Programe header       |
+          |   -s   |        symbol table        |
+
+          ~~不會用就用-a~~
+
+          ---
+
+          #pwntools
+
+          --
+
+          ```python
+          from pwn import *
+          elf=ELF('./vul')
+          elf.___
+          ```
+
+          ---
+
+          #課堂練習
+
+          寫一隻程式觀察function呼叫的狀況  
+          ex:scanf print system ...
+
+          --
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

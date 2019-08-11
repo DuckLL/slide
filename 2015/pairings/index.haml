@@ -1,0 +1,174 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %title Pairings
+    %meta{:content => "A framework for easily creating beautiful presentations using HTML", :name => "description"}/
+    %meta{:content => "Hakim El Hattab", :name => "author"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "black-translucent", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui", :name => "viewport"}/
+    %link{:href => "../css/reveal.css", :rel => "stylesheet"}/
+    %link#theme{:href => "../css/theme/serif.css", :rel => "stylesheet"}/
+    / Code syntax highlighting
+    %link{:href => "../lib/css/zenburn.css", :rel => "stylesheet"}/
+    / Printing and PDF exports
+    :javascript
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    /[if lt IE 9]
+      <script src="lib/js/html5shiv.js"></script>
+  %body
+    .reveal
+      / Any section element inside of this container is displayed as a slide
+      .slides
+        %section
+          %section
+            %h3{:style => "text-align : left;"} A new efficient authenticated multiple-key exchange protocol from bilinear pairings
+            %p{:style => "text-align : left;"} Author(s): MS Farash, MA Attari, RE Atani, M Jami
+            %p{:style => "text-align : left;"} Source: Farash, Mohammad Sabzinejad, et al. Computers & Electrical Engineering 39.2 (2013): 530-541.
+            %p{:style => "text-align : right;"} Presented by: 1013045 ZC Liao
+            %p{:style => "text-align : right;"} Data: 2015/12/15
+          %section
+            %h1
+              Outline
+            %ol
+              %li Introduction
+              %li Review CM
+              %li Implementing
+              %li Security Analysis
+              %li Computaion & Comparisons
+              %li Conclusions
+              %li Q & A
+        %section
+          %section
+            %h1 Introduction
+          %section
+            %p Cheng and Ma’s protocol is
+            %p{:style => "color:#f00"} insecure against a forgery attack.
+            %p =========================
+            %p Then, we propose an enhanced and efficient
+            %p{:style => "color:#f0f"} authenticated multiple-key agreement protocol
+            %p{:style => "color:#f00"} using bilinear parings
+            %p which satisfies all known security requirements.
+        %section
+          %section
+            %h1 Review CM
+          %section
+            %img{"data-src" => "cm.png"}
+          %section
+            %h1 The proposed forgery attack
+          %section
+            %img{"data-src" => "fat.png"}
+          %section
+            %p The complexity of the proposed attack
+            %p{:style => "color:#f00"}is equal to the computa-tional cost
+            %p of the protocol which is 2TM+1TA+4TS.
+            %p The time complexity of the forgery attack is
+            %p{:style => "color:#f00"}27.24 ms
+            %p which is easily achievable.
+        %section
+          %section
+            %h1 Implementing
+            %ol
+              %li The setup phase
+              %li The key agreement phase
+          %section
+            %h2 The setup phase
+            %img{"data-src" => "setup.png"}
+            %img{"data-src" => "setup2.png"}
+          %section
+            %h2 The key agreement phase
+          %section
+            %img{"data-src" => "ip.png"}
+        %section
+          %section
+            %h1 Security Analysis
+            %ol
+              %li Theoretical analysis
+              %li Simulation results
+          %section
+            %h2 Theoretical analysis
+            %ol
+              %li Known-Key Security -> ECDLP
+              %li
+                Perfect Forward Secrecy -> exhaustive search in Z
+                %sub q
+                *
+              %li
+                Key-Compromise Impersonation<br> -> no x
+                %sub B
+                cannot generate signature
+          %section
+            %h2 Simulation results
+            %h3 -> AVISPA
+        %section
+          %section
+            %h1 Computaion & Comparisons
+            %ol
+              %li Session key generate
+              %li Computational time
+          %section
+            %h2 Session key generate
+            %h3 New protocol
+            %p generate ((n+1)n/2)^2 -> O(n^4)
+            %h3 Other protocol
+            %p generate n^2 -> O(n^2)
+          %section
+            %img{"data-src" => "cpr.png"}
+          %section
+            %h2 Computational time
+            %img{"data-src" => "cpt.png"}
+            %p
+              Verification
+              %span{:style => "color:#f00"} without pairings
+            %p
+              Only
+              %span{:style => "color:#f00"} 68.9ms
+        %section
+          %section
+            %h1 Conclusions
+          %section
+            %ol
+              %li CM protocol analysis <br> -> CM protocol is insecure.
+              %li Pairing in session key not in signature scheme <br> -> less computational time <br> -> generate more session key
+              %li The simulation results from AVISPA tools confirmed the security analysis of the protocol. <br> -> the protocol is secure.
+        %section
+          %section
+            %h1 Q & A
+          %section
+            %h1 END
+            %p Thank you for listening.
+    %script{:src => "../lib/js/head.min.js"}
+    %script{:src => "../js/reveal.js"}
+    :javascript
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+      	progress: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // Bounds for smallest/largest possible scale to apply to content
+            minScale: 0.1,
+            maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });

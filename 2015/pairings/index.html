@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>Pairings</title>
+    <meta content='A framework for easily creating beautiful presentations using HTML' name='description'>
+    <meta content='Hakim El Hattab' name='author'>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../css/reveal.css' rel='stylesheet'>
+    <link href='../css/theme/serif.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section>
+          <section>
+            <h3 style='text-align : left;'>A new efficient authenticated multiple-key exchange protocol from bilinear pairings</h3>
+            <p style='text-align : left;'>Author(s): MS Farash, MA Attari, RE Atani, M Jami</p>
+            <p style='text-align : left;'>Source: Farash, Mohammad Sabzinejad, et al. Computers & Electrical Engineering 39.2 (2013): 530-541.</p>
+            <p style='text-align : right;'>Presented by: 1013045 ZC Liao</p>
+            <p style='text-align : right;'>Data: 2015/12/15</p>
+          </section>
+          <section>
+            <h1>
+              Outline
+            </h1>
+            <ol>
+              <li>Introduction</li>
+              <li>Review CM</li>
+              <li>Implementing</li>
+              <li>Security Analysis</li>
+              <li>Computaion & Comparisons</li>
+              <li>Conclusions</li>
+              <li>Q & A</li>
+            </ol>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Introduction</h1>
+          </section>
+          <section>
+            <p>Cheng and Ma’s protocol is</p>
+            <p style='color:#f00'>insecure against a forgery attack.</p>
+            <p>=========================</p>
+            <p>Then, we propose an enhanced and efficient</p>
+            <p style='color:#f0f'>authenticated multiple-key agreement protocol</p>
+            <p style='color:#f00'>using bilinear parings</p>
+            <p>which satisfies all known security requirements.</p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Review CM</h1>
+          </section>
+          <section>
+            <img data-src='cm.png'>
+          </section>
+          <section>
+            <h1>The proposed forgery attack</h1>
+          </section>
+          <section>
+            <img data-src='fat.png'>
+          </section>
+          <section>
+            <p>The complexity of the proposed attack</p>
+            <p style='color:#f00'>is equal to the computa-tional cost</p>
+            <p>of the protocol which is 2TM+1TA+4TS.</p>
+            <p>The time complexity of the forgery attack is</p>
+            <p style='color:#f00'>27.24 ms</p>
+            <p>which is easily achievable.</p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Implementing</h1>
+            <ol>
+              <li>The setup phase</li>
+              <li>The key agreement phase</li>
+            </ol>
+          </section>
+          <section>
+            <h2>The setup phase</h2>
+            <img data-src='setup.png'>
+            <img data-src='setup2.png'>
+          </section>
+          <section>
+            <h2>The key agreement phase</h2>
+          </section>
+          <section>
+            <img data-src='ip.png'>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Security Analysis</h1>
+            <ol>
+              <li>Theoretical analysis</li>
+              <li>Simulation results</li>
+            </ol>
+          </section>
+          <section>
+            <h2>Theoretical analysis</h2>
+            <ol>
+              <li>Known-Key Security -> ECDLP</li>
+              <li>
+                Perfect Forward Secrecy -> exhaustive search in Z
+                <sub>q</sub>
+                *
+              </li>
+              <li>
+                Key-Compromise Impersonation<br> -> no x
+                <sub>B</sub>
+                cannot generate signature
+              </li>
+            </ol>
+          </section>
+          <section>
+            <h2>Simulation results</h2>
+            <h3>-> AVISPA</h3>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Computaion & Comparisons</h1>
+            <ol>
+              <li>Session key generate</li>
+              <li>Computational time</li>
+            </ol>
+          </section>
+          <section>
+            <h2>Session key generate</h2>
+            <h3>New protocol</h3>
+            <p>generate ((n+1)n/2)^2 -> O(n^4)</p>
+            <h3>Other protocol</h3>
+            <p>generate n^2 -> O(n^2)</p>
+          </section>
+          <section>
+            <img data-src='cpr.png'>
+          </section>
+          <section>
+            <h2>Computational time</h2>
+            <img data-src='cpt.png'>
+            <p>
+              Verification
+              <span style='color:#f00'>without pairings</span>
+            </p>
+            <p>
+              Only
+              <span style='color:#f00'>68.9ms</span>
+            </p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Conclusions</h1>
+          </section>
+          <section>
+            <ol>
+              <li>CM protocol analysis <br> -> CM protocol is insecure.</li>
+              <li>Pairing in session key not in signature scheme <br> -> less computational time <br> -> generate more session key</li>
+              <li>The simulation results from AVISPA tools confirmed the security analysis of the protocol. <br> -> the protocol is secure.</li>
+            </ol>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Q & A</h1>
+          </section>
+          <section>
+            <h1>END</h1>
+            <p>Thank you for listening.</p>
+          </section>
+        </section>
+      </div>
+    </div>
+    <script src='../lib/js/head.min.js'></script>
+    <script src='../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+      	progress: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+      
+        // Bounds for smallest/largest possible scale to apply to content
+            minScale: 0.1,
+            maxScale: 1.0,
+      
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+      
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

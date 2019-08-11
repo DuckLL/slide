@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>ASM</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/night.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          #ASM
+          Linux主, Windows輔
+
+          廖子慶  
+          2016/03/14 <!-- .element: align="right" -->
+
+          ---
+
+          ##Register
+
+          ![](./register.png) <!-- .element: width="80%"-->
+
+          --
+
+          | 暫存器 |  通常作用   | 暫存器 | 通常作用  |
+          |  ---   |     ---     |  ---   |    ---    |
+          |  eax   | accumulator |  ebx   |   base    |
+          |  ecx   |   counter   |  edx   |   data    |
+          |  esi   |    index    |  edi   |   index   |
+          |  ebp   | stack base  |  esp   | stack top |
+          |  eip   |  execution  |  flag  |   state   |
+
+          --
+
+          ##Flag
+
+          ![](./flag.png)
+
+          --
+
+          ##Stack
+
+          ![](./stack.png)
+
+          ---
+
+          #Instruction
+
+          --
+
+          ###Simple
+
+          |        指令        |        作用        |      語法      |   範例    |        C++         |
+          |        ---         |        ---         |      ---       |    ---    |        ---         |
+          |      mov, lea      |       設定值       | mov dst,source | mov eax,4 |       eax=4;       |
+          | add, sub, mul, div |       運算值       | add dst,source | add eax,4 |      eax+=4;       |
+          |        push        | esp-=4; [esp]=reg; |    push reg    | push eax  |  stack.push(eax);  |
+          |        pop         | reg=[esp]; esp+=4; |    pop reg     |  pop eax  |  eax=stack.pop();  |
+          |        cmp         |     condition      |  cmp reg,val   | cmp eax,4 |   zf=eax==4?1:0;   |
+          |   jmp,je,jnz...    |      控制程序      |    jmp addr    | je 0x1000 | eip=zf?4096:eip+1; |
+
+          --
+
+          ###More
+
+          | 指令 | 作用 | 語法 | 範例 | C++ |
+          |  --- |  --- |  --- |  --- | --- |
+          |   nop    |    xchange eax,eax    |      nop      |   nop    ||
+          |   ret    |        pop eip        |      ret      |   ret    | eip=stack.pop() |
+          |  leave   | mov esp,ebp; pop ebp; |     leave     |  leave   ||
+          |   call   |  push arg; push eip; jmp addr  | call function | call sh  |   function();   |
+          | int 0x80 |      system call      |   int 0x80    | int 0x80 ||
+
+          [Linux system call](http://docs.cs.up.ac.za/programming/asm/derick_tut/syscalls.html) <!-- .element: target="blank" -->
+
+          ---
+
+          #Example
+
+          --
+
+          ```x86asm
+          BITS 32
+
+          global _start
+
+          _start:
+            push 0x0068732f
+            push 0x6e69622f
+            mov ebx, esp
+
+            mov eax, 0xb
+            mov ecx, 0x0
+            mov edx, 0x0
+            int 0x80
+          ```
+
+          ```x86asm
+          BITS 32
+
+          global _start
+
+          _start:
+              push 0x0000000a
+              push 0x7579636e
+
+              mov eax,4
+              mov ebx,1
+              mov ecx,esp
+              mov edx,5
+              int 0x80
+
+              mov eax,1
+              int 0x80
+          ```
+
+          --
+
+          #編譯成執行檔
+
+          ```sh
+          nasm -f elf32 -o shell.o shell.s && ld -m elf_i386 -o shell.bin shell.o && ./shell.bin
+          ```
+
+          --
+
+          #課堂練習
+
+          開啟日曆(cal)
+
+          輸出自己的英文名字
+
+          ---
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

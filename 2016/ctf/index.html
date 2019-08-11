@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>CTF</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/night.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="../../plugin/chalkboard/font-awesome.min.css">
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          #CTF
+
+          廖子慶  
+          2016/10/04 <!-- .element: align="right" -->
+
+          ---
+
+          #Capture The Flag
+
+          --
+
+          ##Why CTF?
+
+          --
+
+          ##PPP Tyler:
+          ###If you like security, just play ctf!
+
+          --
+
+          ##Orange: <!-- .element: color="orange" -->
+          ###CTF能增加你的思路，技巧能真的用在現實上
+
+          ---
+
+          #Type
+          1. Jeopardy
+          1. Attack & Defense
+          1. King of Hill
+
+          --
+
+          ##Jeopardy
+          ![](./1.png)
+
+          --
+
+          #多人線上
+          ##解題
+          ###AIS3, Most
+
+          --
+
+          ##Attack & Defense
+          ![](./2.jpg)
+
+          --
+
+          #少隊內網連線
+          ##保護自己、攻擊別人
+          ###HITCON, DEFCON
+
+          --
+
+          ##King of Hill
+          ![](./3.png)
+
+          --
+
+          #少隊內網連接
+          ##一起打好幾台機器
+          ###Honyme, SECCON CTF
+
+          ---
+
+          #Problem Set
+
+          1. Pwn
+          1. Web
+          1. Misc
+          1. Recon
+          1. Crypto
+          1. Reverse
+          1. Program
+          1. Forensic
+
+          --
+
+          #Source
+          1. http://ctftime.org
+          1. http://captf.com/practice-ctf/
+
+          ---
+
+          #Q&A
+
+          --
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom 
+
+        menu: {
+            numbers: true,
+            custom: [
+            { title: 'More', icon: '<i class="fa fa-external-link"></i>', src: '../../plugin/menu/more.html'}
+            ],
+            transitions: false
+        },
+        chalkboard: { // font-awesome.min.css must be available
+            toggleChalkboardButton: { left: "80px" },
+            toggleNotesButton: { left: "130px" },
+            theme: "chalkboard",
+	        color: [ 'rgba(255,255,0,1)', 'rgba(255,255,255,0.5)' ],
+        },
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true },
+      		{ src: '../../plugin/math/math.js', async: true },
+      		{ src: '../../plugin/menu/menu.js' },
+      		{ src: '../../plugin/chalkboard/chalkboard.js' }
+      	],
+        keyboard: {
+            67: function() { RevealChalkboard.toggleNotesCanvas()  },    // toggle notes canvas when 'c' is pressed
+            66: function() { RevealChalkboard.toggleChalkboard()  }, // toggle chalkboard when 'b' is pressed
+            46: function() { RevealChalkboard.clear()  },    // clear chalkboard when 'DEL' is pressed
+            8: function() { RevealChalkboard.reset()  },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            68: function() { RevealChalkboard.download()  }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+      });
+    </script>
+  </body>
+</html>

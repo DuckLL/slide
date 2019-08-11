@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>Public-Key Cryptography and RSA</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/serif.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          ##Public-Key Cryptography and RSA
+
+          廖子慶  
+          2016/07/27 <!-- .element: align="right" -->
+
+          ---
+
+          ##Public-Key Cryptosystems
+
+          * Plaintext
+          * Encryption algorithm
+          * Public and private keys
+          * Ciphertext
+          * Decryption algorithm
+
+          --
+
+          ![](./1.jpg) <!-- .element: width="55%" -->
+
+          --
+
+          ##Conventional an Public-Key Encryption
+
+          | Conventional | Public-Key |
+          |     ---      |    ---     |
+          | same algorithm with same key | a pair of key,one for encryption and one for decryption |
+          |    The key must be secret    |         One of the two key must be kept secret          |
+
+          --
+
+          ##Secrecy
+          
+          ![](./2.jpg)
+
+          $Y=E(PU_b,X)$
+
+          $X=D(PU_b,Y)$
+
+          --
+
+          ##Authentication
+          ![](./3.jpg)
+
+          $Y=E(PR_a,X)$
+
+          $X=E(PU_a,Y)$
+
+          --
+
+          ##Authentication and Secrecy
+
+          ![](./4.jpg)
+
+          $Z=E(PU\_b,E(PR\_a,X))$
+
+          $X=E(PU\_a,E(PR\_b,Z))$
+
+          --
+
+          ##Applications for Public-Key Cryptosystems
+
+          |    Algorithm    | Encryption / Decryption | Digital Signature | Key Exchange |
+          |       ---       | --- | --- | --- |
+          |       RSA       | Yes | Yes | Yes |
+          | Elliptic Curve  | Yes | Yes | Yes |
+          | Diffile-Hellman | No  | No  | Yes |
+          |       DSS       | No  | Yes | No  |
+
+          ---
+
+          ##The RSA algorithm
+
+          * $C=M^e\ mod\ n$
+          * $M=C^d\ mod\ n=(M^e)^d\ mod\ n=M^{ed}\ mod\ n$
+
+          --
+
+
+          ##Key Generation
+          
+          * $n=pq$
+          * $\Phi(n)=(p-1)(q-1)$
+          * $gcd(\Phi(n),e)=1$
+          * $d=e^{-1}\ mod\ \Phi(n)$
+          * Public key PU={e,n}
+          * Private key PR={d,n}
+
+          --
+
+          ##Example
+
+          ![](./5.jpg)
+
+          --
+
+          ##Exponentiation in Modular Arithmetic
+
+          $a^b\ mod\ n$
+
+          ```c
+          c=0;
+          f=0;
+          for(i=k;i>=0;i--){
+              c=2*c;
+              f=(f*f)%n;
+              if(b[i]==1){
+                  c++;
+                  f=(f*a)%n;
+              }
+          }
+          ```
+
+          ---
+
+          ##The Security of RSA
+
+          * Brute force
+          * Mathematical attacks
+          * Timing attacks
+          * Chosen ciphertext attacks
+
+          --
+
+          ##Factoring Problem
+
+          For a large n with large prime factors, factoring is a hard problem, but not as hard as it used to be.
+
+          ![](./6.jpg) <!-- .element: width="50%" -->
+
+          --
+
+          ##Timing Attacks
+
+          * Constant exponentiation time
+          * Random delay
+          * Blinding
+
+          --
+
+          ##Chosen Ciphertext Attack and Optimal Asymmetric Encryption Padding
+
+          $E(PU,M\_1)\times E(PU,M\_2)=E(PU,[M\_1\times M\_2])$
+
+          * $C=M^e$
+          * $X=(C\times 2^e)\ mod\ n$
+          * $Y=X^d\ mod\ n$
+          * $X=(2M)^e\ mod\ n$
+          * $Y=(2M)^{ed}\ mod\ n$
+          * $Y=(2M)\ mod\ n$
+
+          --
+
+          ###Encryption Using Optimal Assymetric Encryption Padding(OAEP)
+
+          ![](./7.jpg) <!-- .element: width="40%" -->
+
+          ---
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true },
+      		{ src: '../../plugin/math/math.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

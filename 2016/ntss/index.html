@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>NTSS</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/serif.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="../../plugin/chalkboard/css/font-awesome.min.css">
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          ## Network Time Security Specification
+
+          Author: Dieter Sibold, Kristof Teichel  
+          Source: European Frequency and Time Forum (EFTF), 2016 <!-- .element: align="left" -->
+
+          Zih-Cing Liao (DuckLL)  
+          2016/10/05 <!-- .element: align="right" -->
+
+          ---
+
+          # Outline
+
+          1. Introduction
+          1. Threat analysis and security requirements
+          1. Existing security protocols
+          1. NTS specification
+          1. Results
+          1. Realization of NTS
+          1. Conclusion
+
+          ---
+
+          # Introduction
+
+          1. To add security to time synchronization protocols
+          1. Indispensable
+
+          ---
+
+          # Threat analysis 
+
+          1. Packets are exposed
+          1. Can be inject false Packets <span class="fragment" style="color:red;"> -> Transmission of false time </span>
+          1. Packets delay and rogue master attack
+
+          --
+
+          # Security Requirements 
+
+          1. Verify the identity and authorization of a time server
+          1. Protect exchanged packets 
+          1. Not impede the performance
+          1. Defend Dos attacks
+
+          ---
+
+          ## Existing security protect 
+
+          1. NTP
+          1. PTP
+
+          --
+
+          # NTP
+
+          1. The pre-shared key scheme  
+          (not provide sufficient scalability)
+          1. The Autokey protocol  
+          (too weak to withstand modern attacks)
+
+          * key exchange mechanism suffer from a severe vulnerability
+
+          --
+
+          # PTP
+
+          * Standard specifies a security procedure.  
+          * But not implemented
+
+          ---
+
+          ## NTS Specification
+
+          1. Authorization and Key Exchange 
+          1. Protection of the Time Synchronization 
+
+          ---
+
+          ## Authorization and Key Exchange
+
+          certificate-based authentication
+          1. Normative Preconditions
+          1. Optional Authorization and Key Exchange Scheme
+
+          --
+
+          ## Normative Preconditions
+          
+          * change key input value (KIV) and cookie  
+          * KIV may be opaque to client  
+          * cookie is mutual <span style="color:red;">secret key</span>
+          * $cookie=f(server\ seed,KIV)$
+          * f: one-way function 
+          * server seed: secret server know only
+          * KIV: public value
+
+          --
+
+          ## Optional Authorization and Key Exchange Scheme
+
+          1. Encrypted with client public key
+          1. Signed with server private key
+
+          --
+
+          ![](./1.png)
+
+          ---
+
+          ## Protection of the Time Synchronization
+
+          Message Authentication Code (MAC)  
+          * $MAC=f(c,p)$
+          * f: MAC-generating function
+          * c: cookie
+          * p: payload of time synchronization packets
+
+          --
+
+          ## Unicast Associations
+          ![](./2.png)
+
+          --
+
+          ## Broadcast/Multicast
+          * Same cookie -> Anyone can make false time response
+          * Use TESLA (one-way chain of keys)
+          * Split time into uniform intervals
+          * Assigns key to an interval in reverse order
+
+          ---
+
+          # Results
+
+          1. Achieved Security Goals
+          1. Formal analysis
+
+          --
+
+          ## Achieved Security Goals
+          ![](./3.png) <!-- .element: width="70%" -->
+
+          --
+
+          # Formal analysis
+
+          * Using Cryptographic Message Syntax (CMS)
+          * ProVerif -> some threat in TESLA
+
+          ---
+
+          ## Realzation of NTS
+
+          1. NTP
+          1. PTP
+
+          --
+
+          # NTP
+
+          1. NTS standarized within the IETF
+          1. Implementation developed by Network Time Fundation
+
+          --
+
+          # PTP
+
+          1. IEEE's P1588 working
+          1. Two key management schemes
+            1. GDOI
+            1. TESLA
+
+          ---
+
+          # Conclusion
+
+          * There is ongoing specification work.
+          * Timing aspectin the formal analysis -> not completed.
+          * But already well advanced
+
+          --
+
+          # Time is _POWERFUL!_
+          # Time is _IMPORTANT!_
+
+          ---
+
+          #Q&A
+
+          --
+
+          #END
+          Thank you for listening
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom 
+
+        menu: {
+            numbers: true,
+            custom: [
+            { title: 'More', icon: '<i class="fa fa-external-link"></i>', src: '../../plugin/menu/more.html'}
+            ],
+            transitions: false
+        },
+        chalkboard: { // font-awesome.min.css must be available
+            toggleChalkboardButton: { left: "80px" },
+            toggleNotesButton: { left: "130px" },
+            theme: "chalkboard",
+	        color: [ 'rgba(255,255,0,1)', 'rgba(255,255,255,0.5)' ],
+        },
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true },
+      		{ src: '../../plugin/math/math.js', async: true },
+      		{ src: '../../plugin/menu/menu.js' },
+      		{ src: '../../plugin/chalkboard/chalkboard.js' }
+      	],
+        keyboard: {
+            67: function() { RevealChalkboard.toggleNotesCanvas()  },    // toggle notes canvas when 'c' is pressed
+            66: function() { RevealChalkboard.toggleChalkboard()  }, // toggle chalkboard when 'b' is pressed
+            46: function() { RevealChalkboard.clear()  },    // clear chalkboard when 'DEL' is pressed
+            8: function() { RevealChalkboard.reset()  },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            68: function() { RevealChalkboard.download()  }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+      });
+    </script>
+  </body>
+</html>

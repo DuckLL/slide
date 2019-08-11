@@ -1,0 +1,122 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %title NCYU_CSIE_Hackers
+    %meta{:content => "A framework for easily creating beautiful presentations using HTML", :name => "description"}/
+    %meta{:content => "Hakim El Hattab", :name => "author"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "black-translucent", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui", :name => "viewport"}/
+    %link{:href => "../css/reveal.css", :rel => "stylesheet"}/
+    %link#theme{:href => "../css/theme/white.css", :rel => "stylesheet"}/
+    / Code syntax highlighting
+    %link{:href => "../lib/css/zenburn.css", :rel => "stylesheet"}/
+    / Printing and PDF exports
+    :javascript
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    /[if lt IE 9]
+      <script src="lib/js/html5shiv.js"></script>
+  %body
+    .reveal
+      / Any section element inside of this container is displayed as a slide
+      .slides
+        %section
+          %h1 RAW是什麼
+        %section
+          %section
+            %h2
+              RAW儲存的是
+              %span{:style => "color:#f00;"} 光(電子)訊號
+            %h2
+              JPEG儲存的
+              %span{:style => "color:#f00;"} 色彩資訊
+          %section
+            %h2 電子訊號要轉換成什麼
+            %h2 是我可以控制的
+            %ol
+              %li 色溫
+              %li 色調
+              %li 飽和度
+              %li 銳利度
+          %section
+            %h2 最常舉例的狀況：色溫
+            %img{"data-src" => "org.jpg"}
+          %section
+            %div{:style => "float:left;width:50%;"}
+              %h1 raw
+              %img{"data-src" => "raw.jpg"}
+            %div{:style => "float:right;width:50%;"}
+              %h1 jpg
+              %img{"data-src" => "jpg.jpg"}
+        %section
+          %section
+            %h1 RAW的檔案格式
+            %h2 基於TIFF格式
+            %ol
+              %li 標準header(metadata)
+              %li 拍攝資訊(EXIF)
+              %li 電子資訊
+              %li 縮圖
+          %section
+            %h1 Nikon Electronic Format (NEF)
+            %ol
+              %li 白平衡
+              %li 曝光度
+              %li 色彩轉換
+              %li 動態高光
+              %li 鏡頭資訊
+          %section
+            %h2 正常來說會是
+            %h2{:style => "color:#f00;"} 無損的 12bit or 14-bit data
+            %h3 但在低階機種會故意壓縮
+            %h3 所以就會有人破解
+          %section
+            %img{"data-src" => "crack.jpg", "width" => "70%"}
+        %section
+          %section
+            %h2 header
+            %img{"data-src" => "hex.jpg", "width" => "60%"}
+          %section
+            %h1 read raw
+            %pre
+              %code
+                = preserve do
+                  :escaped
+                      import rawpy
+                      from PIL import Image
+                      raw = rawpy.imread('raw.nef')
+                      print raw.sizes
+                      rgb = raw.postprocess()
+                      img = Image.fromarray(rgb) # Pillow image
+                      img.show() # show on screen
+          %section
+            %img{"data-src" => "read.png"}
+    %script{:src => "../lib/js/head.min.js"}
+    %script{:src => "../js/reveal.js"}
+    :javascript
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+      	progress: true,
+      	history: true,
+      	center: true,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });

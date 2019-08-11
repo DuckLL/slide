@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>Message Authentication and Hash Functions</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/serif.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          ##Message Authentication and Hash Functions
+
+          廖子慶  
+          2016/08/11 <!-- .element: align="right" -->
+
+          ---
+
+          ##Authentication Requirements
+
+          1. Disclosure
+          1. Traffic analysis
+          1. Masquerade
+          1. Content modification
+          1. Squence modificatoin
+          1. Timing modification
+          1. Source repudiation
+          1. Destination repudiation
+
+          --
+
+          ##Authentication Functions
+
+          1. Message encryption
+          1. Message authentication code (MAC)
+          1. Hash function
+
+          ---
+
+          ##Message Encryption
+
+          ![](./1.jpg)
+
+          --
+
+          ##Internal and External Error Control
+
+          ![](./2.jpg)
+
+          ---
+
+          ##Message Authentication Code
+
+          $MAC=C(K,M)$
+
+          --
+
+          * M = variable-length message
+          * K = secret key shared only by sender and receiver
+          * C(K,M) = fixed-length authenticator
+
+          --
+
+          ![](./3.png)
+
+          ---
+
+          ##Hash function
+          
+          $h=H(M)$
+
+          --
+
+          ###Requirement for a Hash Function
+
+          1. H can be applied to a block of data of any size
+          1. H produces a fixed-length output
+          1. H(x) is relatively easy to compute for any given x, making both hardware and software implementation practical
+          1. For any given value h, it is compulationally infeasible to find $y\neq x$ such that H(y)=H(x). This is sometimes referred to as weak collision resistance
+          1. It is computationally infeasible to find any pair(x,y) such that H(x)=H(y). This is sometimes referred to as strong collision resistance
+
+          --
+
+          ##Simple Hash Functions
+
+          $C\_i=b\_{i0}\bigoplus b\_{i1}\bigoplus \cdots \bigoplus b\_{im}$
+
+          * $C_i$ = *i*th bit the hash code, $1\leq i\leq n$ 
+          * m = numver of n-bit blocks in the input
+          * $b_{ij}$ = *i*th bit in *j*th block
+          * $\bigoplus$ = XOR operation
+
+          --
+
+          ##Two Simple Hash Functions
+          
+          ![](./4.jpg)
+
+          --
+
+          ##Birthday Attacks
+
+          Thus, if a 64-bit hash code is used, the level of effort required is only on the order of $2^{32}$
+
+          重複性遠比你想像中的還要高 <!-- .element: class="fragment" -->
+
+          --
+
+          ##Block Chaining Techniques
+
+          Rabin divide a message M into fixed-size blocks
+
+          * $H_o$ = initial value
+          * $H\_i$ = $E(M\_i, H\_i,H\_{i1})$
+          * G = $H_N$
+          
+
+          ---
+
+          ##Security of Hash Funciton and Macs
+
+          --
+
+          ##Brute-Force Attacks
+
+          --
+
+          ##Hash Functions
+
+          | | |
+          | --- | --- |
+          | One way | $2^n$ |
+          | Weak collision resistance | $2^n$ |
+          | Strong collision resistance | $2^{n/2}$ |
+
+          --
+
+          ##MAC
+
+          Computation resistance: Given one or more text-MAC pairs $[x\_i, C(K,x\_i)]$, it is compulationally infeasible to compute any text-MAC pair $[x,C(K,x)]$ for any new input $x\neq x_j$
+
+          --
+
+          ##Cryptanalysis
+
+          --
+
+          ##Hash Functions
+
+          ###General Structure of Secure Hash Code
+          ![](./5.jpg)
+
+          * $CV_O$ = IV = initial n-bit value
+          * $CV\_i = f(CV\_{i1},Y\_{i1}) 1\leq i\leq L$
+          * $H(M)=CV_L$
+
+          --
+
+          ##MAC
+
+          it is difficult to generalize about the cryptanalysis of MACs
+
+          ---
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true },
+      		{ src: '../../plugin/math/math.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

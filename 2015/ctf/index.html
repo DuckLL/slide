@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>CTF hand by hand</title>
+    <meta content='A framework for easily creating beautiful presentations using HTML' name='description'>
+    <meta content='Hakim El Hattab' name='author'>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../css/reveal.css' rel='stylesheet'>
+    <link href='../css/theme/beige.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section>
+          <section>
+            <h1>CTF hand by hand</h1>
+          </section>
+          <section>
+            <h1>
+              Outline
+            </h1>
+            <ol>
+              <li>金盾奬心得</li>
+              <li>圖形題</li>
+              <li>密碼題</li>
+              <li>Web題</li>
+            </ol>
+          </section>
+        </section>
+        <section>
+          <h1>金盾奬心得</h1>
+        </section>
+        <section>
+          <section>
+            <h1>圖形題</h1>
+          </section>
+          <section>
+            <h1>SOP</h1>
+            <ol>
+              <li>辨別檔案類型</li>
+              <li>JPG</li>
+              <li>PNG</li>
+              <li>BMP</li>
+            </ol>
+          </section>
+          <section>
+            <h2>辨別檔案類型</h2>
+            <pre><code style='font-size:150%;'>file $file</code></pre>
+          </section>
+          <section>
+            <h1>JPG</h1>
+            <pre><code style='font-size:150%;'>strings $file &gt; tmp&#x000A;vim tmp</code></pre>
+          </section>
+          <section>
+            <h1>金盾奬2題</h1>
+            <div style='float:left;width:50%;'>
+              <img data-src='THE-WORLD-FLAG.jpg'>
+            </div>
+            <div style='float:left;width:50%;'>
+              <img data-src='3DNA.jpg'>
+            </div>
+          </section>
+          <section>
+            <h1>PNG</h1>
+            <h1 class='fragment'>-> Stegsolve</h1>
+          </section>
+          <section>
+            <h1>自製題目</h1>
+            <img data-src='png.png'>
+          </section>
+          <section>
+            <h1>BMP</h1>
+            <h1 class='fragment'>-> Stegsolve</h1>
+          </section>
+          <section>
+            <h1>AIS3題目</h1>
+            <img data-src='c4.bmp'>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>密碼題</h1>
+          </section>
+          <section>
+            <h1>base64</h1>
+            <h2>3 byte -> 4 code</h2>
+            <h2>特徵 = 結尾</h2>
+          </section>
+          <section>
+            <h1>encode</h1>
+            <pre><code style='font-size:150%;'>&gt;&gt;&gt; import base64&#x000A;&gt;&gt;&gt; encode = base64.b64encode('the flag is ahq.')&#x000A;&gt;&gt;&gt; encode&#x000A;'dGhlIGZsYWcgaXMgYWhxLg=='</code></pre>
+          </section>
+          <section>
+            <h1>decode</h1>
+            <pre><code style='font-size:150%;'>&gt;&gt;&gt; tmp = base64.b64decode(encode)&#x000A;&gt;&gt;&gt; tmp&#x000A;'the flag is ahq.'</code></pre>
+          </section>
+          <section>
+            <h1>AES</h1>
+            <a href='http://aes.online-domain-tools.com/'>onlinetool</a>
+          </section>
+          <section>
+            <h1>RSA</h1>
+            <a href='http://nmichaels.org/rsa.py'>onlinetool</a>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Web題</h1>
+          </section>
+          <section>
+            <h1>開發者工具</h1>
+          </section>
+          <section>
+            <h1>歷屆</h1>
+            <ol>
+              <li>
+                <a href='https://16thsummer.azurewebsites.net/'>金盾奬</a>
+              </li>
+              <li>
+                <a href='https://dl.dropboxusercontent.com/u/31849988/HITCON2013/index.html'>HITCON2013</a>
+              </li>
+            </ol>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>我為什麼敢提供SOP</h2>
+            <h2 class='fragment'>因為CTF可以用SOP解<br>就不用玩了...</h2>
+          </section>
+          <section>
+            <h1>Q & A</h1>
+          </section>
+          <section>
+            <h1>END</h1>
+            <p>Thank you for listening.</p>
+          </section>
+        </section>
+      </div>
+    </div>
+    <script src='../lib/js/head.min.js'></script>
+    <script src='../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+      
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+      
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

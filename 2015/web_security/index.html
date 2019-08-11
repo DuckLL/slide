@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>Web Security</title>
+    <meta content='A framework for easily creating beautiful presentations using HTML' name='description'>
+    <meta content='Hakim El Hattab' name='author'>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../css/reveal.css' rel='stylesheet'>
+    <link href='../css/theme/night.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section>
+          <section>
+            <h1>Web Security</h1>
+            <p>2015.11.26</p>
+            <p>廖子慶</p>
+          </section>
+          <section>
+            <h1>
+              <ol>
+                <li>Web攻擊流程</li>
+                <li>搜集</li>
+                <li>掃描</li>
+                <li>取得權限</li>
+              </ol>
+            </h1>
+          </section>
+          <section>
+            <h1>setting</h1>
+            <a href='?transition=none#/transitions'>None</a>
+            -
+            <a href='?transition=fade#/transitions'>Fade</a>
+            -
+            <a href='?transition=slide#/transitions'>Slide</a>
+            -
+            <a href='?transition=convex#/transitions'>Convex</a>
+            -
+            <a href='?transition=concave#/transitions'>Concave</a>
+            -
+            <a href='?transition=zoom#/transitions'>Zoom</a>
+            <p></p>
+            <a href='#' onclick="document.getElementById('theme').setAttribute('href','../css/theme/black.css'); return false;">Black</a>
+            -
+            <a href='#' onclick="document.getElementById('theme').setAttribute('href','../css/theme/white.css'); return false;">White</a>
+            -
+            <a href='#' onclick="document.getElementById('theme').setAttribute('href','../css/theme/league.css'); return false;">League</a>
+            -
+            <a href='#' onclick="document.getElementById('theme').setAttribute('href','../css/theme/sky.css'); return false;">Sky</a>
+            -
+            <a href='#' onclick="document.getElementById('theme').setAttribute('href','../css/theme/beige.css'); return false;">Beige</a>
+            -
+            <a href='#' onclick="document.getElementById('theme').setAttribute('href','../css/theme/simple.css'); return false;">Simple</a>
+            <br>
+            <a href='#' onclick="document.getElementById('theme').setAttribute('href','../css/theme/serif.css'); return false;">Serif</a>
+            -
+            <a href='#' onclick="document.getElementById('theme').setAttribute('href','../css/theme/blood.css'); return false;">Blood</a>
+            -
+            <a href='#' onclick="document.getElementById('theme').setAttribute('href','../css/theme/night.css'); return false;">Night</a>
+            -
+            <a href='#' onclick="document.getElementById('theme').setAttribute('href','../css/theme/moon.css'); return false;">Moon</a>
+            -
+            <a href='#' onclick="document.getElementById('theme').setAttribute('href','../css/theme/solarized.css'); return false;">Solarized</a>
+          </section>
+        </section>
+        <section>
+          <h2>駭客攻擊Web流程</h2>
+          <ol>
+            <li>偵查</li>
+            <li>掃描</li>
+            <li>獲得權限</li>
+            <li>提升權限</li>
+            <li>清除痕跡</li>
+          </ol>
+        </section>
+        <section>
+          <section>
+            <h1>偵查</h1>
+          </section>
+          <section>
+            <h1>Whois</h1>
+          </section>
+          <section>
+            <h1>Robots.txt</h1>
+          </section>
+          <section>
+            <h1>
+              <a href='http://archive.org' target='blank'>Archive.org</a>
+            </h1>
+          </section>
+          <section>
+            <h1>直接尋找CVE</h1>
+            <ol>
+              <li>Moodle</li>
+              <li>Wordpress</li>
+              <li>Discuz</li>
+            </ol>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>掃描</h1>
+          </section>
+          <section>
+            <h1>Netsparker</h1>
+            <h1>AWVS9</h1>
+          </section>
+        </section>
+        <section>
+          <h1>中場休息</h1>
+        </section>
+        <section>
+          <section>
+            <h1>獲得權限</h1>
+          </section>
+          <section>
+            <h1>ZAP</h1>
+            <p>proxy</p>
+            <p>127.0.0.1:8080</p>
+          </section>
+          <section>
+            <h1>Sqlmap</h1>
+            <p>base on python</p>
+          </section>
+          <section>
+            <h1>測試可能性</h1>
+            <p>sqlmap -r $raw -p "$p1"</p>
+          </section>
+          <section>
+            <h1>找出資料庫</h1>
+            <p>sqlmap -r $raw -p "$p1" -v 1 --dbs</p>
+          </section>
+          <section>
+            <h1>找出資料表</h1>
+            <p>sqlmap -r $raw -p "$p1" -v 1 -D $db_name --table</p>
+          </section>
+          <section>
+            <h1>找出欄位</h1>
+            <p>sqlmap -r $raw -p "$p1" -v 1 -D $db_name -T $tb_name --columns -v 1</p>
+          </section>
+          <section>
+            <h1>選擇要顯示的欄位</h1>
+            <p>sqlmap -r $raw -p "$p1" -v 1 -D $db_name -T $tb_name -C "$col1,$col2,..." --dump -v 1</p>
+          </section>
+        </section>
+        <section>
+          <h1>END</h1>
+          <p>謝謝大家</p>
+        </section>
+      </div>
+    </div>
+    <script src='../lib/js/head.min.js'></script>
+    <script src='../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+      	progress: true,
+      	history: true,
+      	center: true,
+      
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+      
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

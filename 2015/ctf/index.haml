@@ -1,0 +1,171 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %title CTF hand by hand
+    %meta{:content => "A framework for easily creating beautiful presentations using HTML", :name => "description"}/
+    %meta{:content => "Hakim El Hattab", :name => "author"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "black-translucent", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui", :name => "viewport"}/
+    %link{:href => "../css/reveal.css", :rel => "stylesheet"}/
+    %link#theme{:href => "../css/theme/beige.css", :rel => "stylesheet"}/
+    / Code syntax highlighting
+    %link{:href => "../lib/css/zenburn.css", :rel => "stylesheet"}/
+    / Printing and PDF exports
+    :javascript
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    /[if lt IE 9]
+      <script src="lib/js/html5shiv.js"></script>
+  %body
+    .reveal
+      / Any section element inside of this container is displayed as a slide
+      .slides
+        %section
+          %section
+            %h1 CTF hand by hand
+          %section
+            %h1
+              Outline
+            %ol
+              %li 金盾奬心得
+              %li 圖形題
+              %li 密碼題
+              %li Web題
+        %section
+          %h1 金盾奬心得
+        %section
+          %section
+            %h1 圖形題
+          %section
+            %h1 SOP
+            %ol
+              %li 辨別檔案類型
+              %li JPG
+              %li PNG
+              %li BMP
+          %section
+            %h2 辨別檔案類型
+            %pre
+              %code{:style => "font-size:150%;"}
+                = preserve do
+                  :escaped
+                    file $file
+          %section
+            %h1 JPG
+            %pre
+              %code{:style => "font-size:150%;"}
+                = preserve do
+                  :escaped
+                    strings $file > tmp
+                    vim tmp
+          %section
+            %h1 金盾奬2題
+            %div{:style => "float:left;width:50%;"}
+              %img{"data-src" => "THE-WORLD-FLAG.jpg"}
+            %div{:style => "float:left;width:50%;"}
+              %img{"data-src" => "3DNA.jpg"}
+          %section
+            %h1 PNG
+            %h1.fragment -> Stegsolve
+          %section
+            %h1 自製題目
+            %img{"data-src" => "png.png"}
+          %section
+            %h1 BMP
+            %h1.fragment -> Stegsolve
+          %section
+            %h1 AIS3題目
+            %img{"data-src" => "c4.bmp"}
+        %section
+          %section
+            %h1 密碼題
+          %section
+            %h1 base64
+            %h2 3 byte -> 4 code
+            %h2 特徵 = 結尾
+          %section
+            %h1 encode
+            %pre
+              %code{:style => "font-size:150%;"}
+                = preserve do
+                  :escaped
+                    >>> import base64
+                    >>> encode = base64.b64encode('the flag is ahq.')
+                    >>> encode
+                    'dGhlIGZsYWcgaXMgYWhxLg=='
+          %section
+            %h1 decode
+            %pre
+              %code{:style => "font-size:150%;"}
+                = preserve do
+                  :escaped
+                    >>> tmp = base64.b64decode(encode)
+                    >>> tmp
+                    'the flag is ahq.'
+          %section
+            %h1 AES
+            %a{"href" => "http://aes.online-domain-tools.com/"} onlinetool
+          %section
+            %h1 RSA
+            %a{"href" => "http://nmichaels.org/rsa.py"} onlinetool
+        %section
+          %section
+            %h1 Web題
+          %section
+            %h1 開發者工具
+          %section
+            %h1 歷屆
+            %ol
+              %li
+                %a{"href" => "https://16thsummer.azurewebsites.net/"} 金盾奬
+              %li
+                %a{"href" => "https://dl.dropboxusercontent.com/u/31849988/HITCON2013/index.html"} HITCON2013
+        %section
+          %section
+            %h2 我為什麼敢提供SOP
+            %h2.fragment 因為CTF可以用SOP解<br>就不用玩了...
+          %section
+            %h1 Q & A
+          %section
+            %h1 END
+            %p Thank you for listening.
+    %script{:src => "../lib/js/head.min.js"}
+    %script{:src => "../js/reveal.js"}
+    :javascript
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });
