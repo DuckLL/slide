@@ -1,0 +1,420 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %title VM_Linux_Vim
+    %meta{:content => "A framework for easily creating beautiful presentations using HTML", :name => "description"}/
+    %meta{:content => "Hakim El Hattab", :name => "author"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "black-translucent", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui", :name => "viewport"}/
+    %link{:href => "../css/reveal.css", :rel => "stylesheet"}/
+    %link#theme{:href => "../css/theme/night.css", :rel => "stylesheet"}/
+    / Code syntax highlighting
+    %link{:href => "../lib/css/zenburn.css", :rel => "stylesheet"}/
+    / Printing and PDF exports
+    :javascript
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    /[if lt IE 9]
+      <script src="lib/js/html5shiv.js"></script>
+  %body
+    .reveal
+      / Any section element inside of this container is displayed as a slide
+      .slides
+        %section
+          %section
+            %h1 學會Linux
+            %h1 -從VM開始
+            %p 2015.10.29
+            %p 廖子慶
+          %section
+            %h1
+              %ol
+                %li VM
+                %li Linux
+                %li vim
+          %section
+            %h1 setting
+            %a{:href => "?transition=none#/transitions"} None
+            \-
+            %a{:href => "?transition=fade#/transitions"} Fade
+            \-
+            %a{:href => "?transition=slide#/transitions"} Slide
+            \-
+            %a{:href => "?transition=convex#/transitions"} Convex
+            \-
+            %a{:href => "?transition=concave#/transitions"} Concave
+            \-
+            %a{:href => "?transition=zoom#/transitions"} Zoom
+            %p
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/black.css'); return false;"} Black
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/white.css'); return false;"} White
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/league.css'); return false;"} League
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/sky.css'); return false;"} Sky
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/beige.css'); return false;"} Beige
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/simple.css'); return false;"} Simple
+            %br/
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/serif.css'); return false;"} Serif
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/blood.css'); return false;"} Blood
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/night.css'); return false;"} Night
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/moon.css'); return false;"} Moon
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/solarized.css'); return false;"} Solarized
+        %section
+          %section
+            %h1 why vm?
+            %ol
+              %li 獨立性
+              %li 快速復原
+              %li 無需重開機
+          %section
+            %h1 which one
+            %ol
+              %li VirtualBox
+              %li VMWare
+              %li HyperV
+          %section
+            %h1 今天要灌的OS
+            %h2 Kali Linux2.0
+          %section
+            %h1 Kali Linux
+            %ol
+              %li base on ubuntu
+              %li vm_friendly
+              %li many hack tools
+          %section
+            %h1 廢話不多說
+            %h1 直接hand by hand
+        %section
+          %h1 中場休息
+        %section
+          %section
+            %h1 Linux
+          %section
+            %h1 why use shell?
+          %section
+            %h1 基本指令
+            %table
+              %thead
+                %tr
+                  %th Command
+                  %th Purpose
+                  %th Example
+              %tbody
+                %tr
+                  %td ls
+                  %td list content
+                  %td ls ./
+                %tr
+                  %td cd
+                  %td change directory
+                  %td cd ../
+                %tr
+                  %td cp
+                  %td copy file
+                  %td cp a.cpp b.cpp
+                %tr
+                  %td mv
+                  %td move file(rename)
+                  %td mv a.cpp b.cpp
+                %tr
+                  %td rm
+                  %td remove file(dangerous)
+                  %td rm a.cpp
+                %tr
+                  %td mkdir
+                  %td create directory
+                  %td mkdir tmp
+          %section
+            %h1 進階指令
+            %table
+              %thead
+                %tr
+                  %th Command
+                  %th Purpose
+                  %th Example
+              %tbody
+                %tr
+                  %td su
+                  %td root login
+                  %td su
+                %tr
+                  %td sudo
+                  %td do as root
+                  %td sudo apt-get update
+                %tr
+                  %td exit
+                  %td logout
+                  %td exit
+                %tr
+                  %td chmod
+                  %td change privilege
+                  %td chmod 777 a.cpp
+                %tr
+                  %td echo
+                  %td display
+                  %td echo 1
+                %tr
+                  %td cat
+                  %td display file
+                  %td cat a.cpp
+          %section
+            %h1 控制指令
+            %table
+              %thead
+                %tr
+                  %th Command
+                  %th Purpose
+                  %th Example
+              %tbody
+                %tr
+                  %td ;
+                  %td 執行兩個指令
+                  %td ls ; pwd
+                %tr
+                  %td &&
+                  %td 執行第二個當第一個成功
+                  %td ls && pwd
+                %tr
+                  %td ||
+                  %td 執行第二個當第一個失敗
+                  %td ls || pwd
+                %tr
+                  %td >
+                  %td 把執行結果寫入檔案(複寫)
+                  %td ls > a.txt
+                %tr
+                  %td >>
+                  %td 把執行結果寫入檔案(加入)
+                  %td ls >> a.txt
+                %tr
+                  %td <
+                  %td 讀入檔案當作stdin輸入
+                  %td a.cpp < test.txt >
+          %section
+            %h1 tips
+            %table
+              %thead
+                %tr
+                  %th Command
+                  %th Purpose
+              %tbody
+                %tr
+                  %td up, down
+                  %td 歷史指令
+                %tr
+                  %td ctrl+r
+                  %td 搜尋指令
+                %tr
+                  %td ctrl+l
+                  %td 清除視窗
+                %tr
+                  %td ctrl+u
+                  %td 重新輸入
+                %tr
+                  %td tab
+                  %td 自動補齊
+          %section
+            %h1 來練習吧...
+            %ol
+              %li 移動目錄到/etc
+              %li 把passwd複製到~/
+              %li 把passwd改名成haha
+              %li 把現在目錄的狀況寫入haha後面
+              %li 顯示haha
+          %section
+            %h1 更多技巧請參考
+            %a{"href" => "http://linux.vbird.org/linux_basic/"}鳥哥的Linux私房菜
+            %p
+            %s.fragment 把Windows刪掉就自然學會囉
+        %section
+          %h1 中場休息
+        %section
+          %section
+            %h1 vim
+            %p.fragment 當個真男人
+          %section
+            %h1 不就是個編輯器嗎
+            %s.fragment 比筆記本還難用誒
+          %section
+            %h1 就因為只是個編輯器
+            %ol
+              %li 開啟速度快
+              %li 跨平台
+              %li 無須GUI介面
+              %li 擴充性高
+              %li 自訂性高
+          %section
+            %h1 DEMO一下你就知道
+          %section
+            %h1 3 mode
+            %ol
+              %li normal
+              %li insert
+              %li visual
+          %section
+            %h1 contorl
+            %table
+              %thead
+                %tr
+                  %th Command
+                  %th Purpose
+              %tbody
+                %tr
+                  %td hjkl
+                  %td 左下上右
+                %tr
+                  %td w
+                  %td move a word
+                %tr
+                  %td b
+                  %td back a word
+                %tr
+                  %td ctrl+f
+                  %td page down
+                %tr
+                  %td ctrl+b
+                  %td page up
+                %tr
+                  %td H
+                  %td page head
+                %tr
+                  %td L
+                  %td page tail
+          %section
+            %h1 visual mode
+            %table
+              %thead
+                %tr
+                  %th Command
+                  %th Purpose
+              %tbody
+                %tr
+                  %td v
+                  %td select from here
+                %tr
+                  %td V
+                  %td select line from here
+                %tr
+                  %td ctrl+v
+                  %td space select
+                %tr
+                  %td 大於
+                  %td 右推縮排
+                %tr
+                  %td 小於
+                  %td 左推縮排
+          %section
+            %h1 control(cont.)
+            %table
+              %thead
+                %tr
+                  %th Command
+                  %th Purpose
+              %tbody
+                %tr
+                  %td y
+                  %td copy
+                %tr
+                  %td x
+                  %td cut
+                %tr
+                  %td p
+                  %td paste
+                %tr
+                  %td d
+                  %td delete
+                %tr
+                  %td .
+                  %td again
+                %tr
+                  %td u
+                  %td undo
+                %tr
+                  %td ctrl+r
+                  %td redo
+                %tr
+                  %td c
+                  %td change(=d+i)
+          %section
+            %h1 to enter code
+            %table
+              %thead
+                %tr
+                  %th Command
+                  %th Purpose
+              %tbody
+                %tr
+                  %td i
+                  %td insert here
+                %tr
+                  %td I
+                  %td insert line head
+                %tr
+                  %td a
+                  %td insert here(back)
+                %tr
+                  %td A
+                  %td insert line tail
+                %tr
+                  %td r
+                  %td replace
+                %tr
+                  %td R
+                  %td replace here
+          %section
+            %h1 存檔
+            %p :wq 儲存離開
+            %p :q! 不儲存離開
+          %section
+            %h1 練習時間
+            %a{"href" => "http://vim-adventures.com/", "target" => "_blank"} game
+          %section
+            %h1 最重要的套件應用
+            %h2 要請大家自己去挑選了
+            %a{"href" => "http://blog.eddie.com.tw/category/vim/", "target" => "_blank"} 跟著龍哥學vim
+            %p
+            %a{"href" => "https://gist.github.com/DuckLL/f6f385e6dbce37225d21", "target" => "_blank"} my .vimrc
+          %section
+            %h1 最後我要說..
+            %h1.fragment vim非常非常的難
+            %s.fragment 其實整個學期都上vim也是可以的
+        %section
+          %h1 END
+          %p 謝謝大家
+    %script{:src => "../lib/js/head.min.js"}
+    %script{:src => "../js/reveal.js"}
+    :javascript
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+      	progress: true,
+      	history: true,
+      	center: true,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });

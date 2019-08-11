@@ -1,0 +1,494 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %title NCYU_CSIE_Hackers
+    %meta{:content => "A framework for easily creating beautiful presentations using HTML", :name => "description"}/
+    %meta{:content => "Hakim El Hattab", :name => "author"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "black-translucent", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui", :name => "viewport"}/
+    %link{:href => "../css/reveal.css", :rel => "stylesheet"}/
+    %link#theme{:href => "../css/theme/white.css", :rel => "stylesheet"}/
+    / Code syntax highlighting
+    %link{:href => "../lib/css/zenburn.css", :rel => "stylesheet"}/
+    / Printing and PDF exports
+    :javascript
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    /[if lt IE 9]
+      <script src="lib/js/html5shiv.js"></script>
+  %body
+    .reveal
+      / Any section element inside of this container is displayed as a slide
+      .slides
+        %section
+          %section
+            %h1 雲端資訊安全
+            %h1 -深入淺出資訊安全
+            %p 2015.10.15
+            %p 廖子慶
+          %section
+            %ol
+              %li 資安=駭客?-了解資訊安全
+              %li 第一次破解就上手-實作與講解
+              %li 第一次破解就上癮-技巧示範
+        %section
+          %section
+            %h1 駭客？
+            %h1 資訊安全？
+          %section
+            %h1 Hacker
+            %h1 v.s.
+            %h1 Cracker
+          %section
+            %h1 Windows
+            %h1 OSX
+            %h1 Linux
+          %section
+            %h2 c/c++
+            %h2 java
+            %h2 perl
+            %h2 python
+            %h2 ruby
+          %section
+            %h1 php
+            %h1 asp
+            %h1 node.js
+          %section
+            %h1 android
+            %h1 ios
+          %section
+            %h1 arduino
+            %h1 Raspberry Pi
+          %section
+            %h1 想要成爲駭客只需要精通一門
+          %section
+            %h1 但想要成爲資安專家就要樣樣精通
+          %section
+            %h3 資訊安全的特殊性(ref:bambofox)
+            %ol
+              %li.fragment
+                %p{:style => "color:#f00;"}
+                  快速演進
+                  %ul
+                    %li 任何新技術，都可能有資安方面的問題
+                    %li 資安研究需要快速瞭解吸收新知
+              %li.fragment
+                %p{:style => "color:#f00;"}
+                  與系統高度相關
+                  %ul
+                    %li 資安技術無法單獨存在，皆須依賴所針對的系統，如：網站，機器
+                    %li 資安研究需要精通所針對的系統
+              %li.fragment
+                %p{:style => "color:#f00;"}
+                  木桶理論
+                  %ul
+                    %li 系統安全性取決於安全層級最弱的一環
+                    %li 資安研究員需要全面性分析系統安全性
+          %section
+            %h1
+              %p{:style => "color:#f00;"}
+                破壞性思維
+            %ul
+              %li 攻擊者思維方式與程式設計師不同
+              %li 資安研究員需要瞭解攻擊者的手法
+          %section
+            %h1 Orange:
+            %p 看一個人是否適合做安全技術研究，
+            %p 主要看三點，按重要程度排序就是：
+            %p{:style => "color:#f00;"} 思路靈活、興趣濃厚、基礎紮實。
+            %ol
+              %li 思路最重要，因為這個很難培養。
+              %li 基礎也很重要，但這是三點中唯一可以通過勤奮來彌補的。
+              %li
+                把興趣排在第二，是因為有些人可能沒接觸過，不知道自己對這個有興趣，
+                %span{:style => "color:#aaa;"} 類似「不試試怎麼知道自己不喜歡男生」。
+        %section
+          %section
+            %h1 我們先把資安簡單分類一下
+          %section
+            %h1 電腦
+            %ol
+              %li
+                Windows
+              %li
+                OSX
+              %li
+                Linux
+                %ol
+                  %li 漏洞發覺、利用(Explorer, DLL Injection)
+                  %li 惡意程式分析(病毒、木馬、蠕蟲)
+                  %li 遊戲外掛程式
+          %section
+            %h1 手機
+            %ol
+              %li
+                Android
+              %li
+                iOS
+                %ol
+                  %li 跟電腦差不多
+                  %li 重點：隱私資料搜集
+          %section
+            %h1 跨平台
+            %ol
+              %li
+                Web
+                %ol
+                  %li SQL Injection
+                  %li XSS
+                  %li Fileupdate
+                  %li Remote Access Terminal
+              %li
+                各種程式語言
+                %ol
+                  %li 程式撰寫漏洞(BOF, UAF)
+                  %li Jump out the sandbox.
+          %section
+            %h1 密碼學
+            %ol
+              %li 對稱式加密(AES)
+              %li 非對稱式加密(RSA)
+              %li 雜湊(MD5)
+              %li 數論、幾何
+          %section
+            %h1 數位鑑識
+            %ol
+              %li 封包分析
+              %li 破解壓縮擋
+              %li 憑證存取
+              %li 資料隱藏
+          %section
+            %h2 其實很多種狀況是要Combo的
+            %p 利用sqlinjection登入，找到一個任意upload的地方，利用系統漏洞提權，成功取得後門
+        %section
+          %section
+            %h1 該如何起手呢
+          %section
+            %h3 學習面向(ref:bambofox)
+            %ol
+              %li 系統化學習
+              %ul
+                %li
+                  %span{:style => "color:#f00;"} 課程
+                  幫助你快速了解一門學問
+                %li
+                  %span{:style => "color:#f00"} 讀書
+                  讓你有系統的看見一門學科的全貌
+              %li 深入學習
+              %ul
+                %li
+                  %span{:style => "color:#f00"} 新聞
+                  及技術文章讓你初步接觸最新的研究發展
+                %li
+                  %span{:style => "color:#f00"}論文
+                  深入探討最新的研究
+              %li 實作技術練習
+              %ul
+                %li
+                  %span{:style => "color:#f00"} 練習
+                  讓你真正了解體會這門學科
+                %li
+                  %span{:style => "color:#f00"} 競賽
+                  提升你的程度，讓你有機會突破自己的極限
+          %section
+            %h1{:style => "color:#f00"} 重點在自學
+        %section
+          %section
+            %h1 最快的學習方式-CTF
+          %section
+            %h1 What is CTF?
+            %p.fragment Capture The Flag
+          %section
+            %h1 題型
+            %ol
+              %li Web
+              %li Binary
+              %li Crypto
+              %li Pwn
+              %li Misc
+          %section
+            %h1 比賽種類
+            %ol
+              %li Jeopardy
+              %li Attack & Defense
+              %li King of Hill
+          %section
+            %h2 Jeopardy
+            %img{"data-src" => "2.png"}
+          %section
+            %h1 多人線上
+            %h2 解題
+            %h3 HITCON CTF, Defcon CTF Quals
+          %section
+            %h2 Attack & Defense
+            %img{"data-src" => "3.jpg"}
+          %section
+            %h1 少隊內網連接
+            %h2 保護自己、攻擊別人
+            %h3 Defcon CTF Fianl, 台交攻防賽
+          %section
+            %h2 King of Hill
+            %img{"data-src" => "4.png"}
+          %section
+            %h1 少隊內網連接
+            %h2 一起打好幾台機器
+            %h3 Honeyme, Seccon CTF
+          %section
+            %h1 Why ctf?
+          %section
+            %p Tyler: If you like security, just play ctf!
+            %img{"data-src" => "tyler.jpg"}
+          %section
+            %h1 CTF網站
+            %ul
+              %li
+                %a{"href" => "http://ctf.lobsiinvok.pw/", "target" => "_blank"} 中山大學
+              %li
+                %a{"href" => "http://secprog.cs.nctu.edu.tw/", "target" => "_blank"} 交通大學
+              %li
+                %a{"href" => "https://www.hackthissite.org/", "target" => "_blank"} HackThisSite
+              %li
+                %a{"href" => "http://captf.com/practice-ctf/", "target" => "_blank"} 有人好心整理了一個List
+        %section
+          %section
+            %h1 不知道怎麼開始？
+          %section
+            %img{"data-src" => "1.png"}
+          %section
+            %h1 當然是看實況呀
+            %p.fragment 不過通常是Write Up拉
+          %section
+            %h1 菁英級
+            %p{:style => "color:orange"} orange (web)
+            %p x43x61x69(Zhi-Wei Cai) (web osx)
+          %section
+            %h1 大師級
+            %p ddaa
+            %p atdog
+            %p jeffxx
+            %p dm4
+            %p hwchen18546
+            %p angelboy
+            %p sean (bin)
+            %p l4ys
+          %section
+            %h1 鑽石級
+            %p bruce30262 (bin)
+            %p steven5538
+            %p inndy (new star)
+            %p adr (windows)
+          %section
+            %h1 戰隊
+            %p 217
+            %p bambofox
+            %p hst.tw
+            %p NSYSU CTF
+            %p UCCU
+          %section
+            %h1 網站
+            %p 烏雲
+            %p Hacknews
+            %p kb.hitcon
+            %p 91Ri.org
+            %p freebuf.com
+          %section
+            %h1 FB
+            %h1 Blog
+            %h1 Github
+          %section
+            %h1{:style => "color:#f00;"} RSS
+            %p is the powerful tool!
+        %section
+          %section
+            %h1 除了實況還可以
+            %h1{:style => "color:#f00;"} 看武功秘笈
+          %section
+            %h1 基礎心法
+            %ol
+              %li Linux
+              %li C++
+              %li Python
+              %li PHP
+          %section
+            %h1 Web
+            %p 網路竟然這麼危險！
+            %p Web 2.0 駭客技術揭密
+          %section
+            %h1 Binary
+            %p 加密與解密
+            %p 逆向工程核心原理
+          %section
+            %h1 Crypto
+            %p Cryptography and Network Security
+            %p 請去修資訊安全
+          %section
+            %h1 Pwn
+            %p 0day安全
+            %p Hacking: The Art of Exploitation
+            %p Kali Linux滲透測試工具
+            %a{:href => "http://securityalley.blogspot.tw/2014/06/buffer-overflow-windows.html", "target" => "_blank"} BOF
+          %section
+            %h1 Misc
+            %p ACM
+            %p 提升程式設計的解題思考力
+        %section
+          %h1 還有一個很棒的方法
+          %div.fragment
+            %p 參加各式研討會
+            %p HITCON, HoneyCon ...
+            %p 參加各種 公開 社群
+            %p TDOH, HST, RAT ...
+        %section
+          %h1 中場休息 10min
+        %section
+          %section
+            %h1 實作WEB題
+          %section
+            %p{:style => "font-size:250%;"} SQL injection
+          %section
+            %h1 首先要知道SQL是什麼
+            %p 一個動態網站通常都會需要資料庫
+            %p 用來管理會員資料、商品資訊...
+            %p 而資料庫使用的程式語言通稱為SQL
+          %section
+            %h1 介紹重要指令
+            %ul
+              %li
+                動作
+                %ol
+                  %li SELECT
+                  %li INSERT
+                  %li DELETE
+              %li 介詞 FROM
+              %li 過濾運算 WHERE
+              %li 註解 --
+            %pre
+              %code
+                = preserve do
+                  :escaped
+                    SELECT * FROM member WHERE id='admin' and pass='123456' -- <(_ _)>
+          %section
+            %p SQL injection是怎麼發生的
+            %pre
+              %code
+                = preserve do
+                  :escaped
+                    IF(SELECT * FROM member WHERE id='[arg1]' and pass='[arg2]') //有查到東西
+                      login_seccess([arg1]); //登入成功
+                    else
+                      login_error(); //登入失敗
+          %section
+            %p 正常情況應該是這樣
+            %p arg1=admin arg2=123456
+            %pre
+              %code
+                = preserve do
+                  :escaped
+                    IF(SELECT * FROM member WHERE id='admin' and pass='123456') //有查到東西
+            %p 但駭客就是不正常?!
+            %p arg1=admin arg2='or'1'='1
+            %pre
+              %code
+                = preserve do
+                  :escaped
+                    IF(SELECT * FROM member WHERE id='admin' and pass=''or'1'='1') //也有查到東西
+          %section
+            %h1 注意到什麼了嘛!
+            %pre
+              %code{:style => "font-size:120%;"}
+                = preserve do
+                  :escaped
+                    WHERE id='admin' and pass=''or'1'='1'
+                    '1'='1'//恆成立
+                    true and false or true // true!!!
+            %div.fragment
+              %p 我根本不需要知道密碼啊
+              %img{"data-src" => "haha.jpg", "width" => "30%"}
+          %section
+            %h1 DEMO
+            %a{"href" => "http://duckliao.lionfree.net/sqlinjection", "target" => "_blank"}
+              site
+          %section
+            %h1 Your time
+            %a{"href" => "http://duckliao.lionfree.net/sqlinjection", "target" => "_blank"}
+              http://duckliao.lionfree.net/sqlinjection
+            %ol
+              %li Basic: Try to login the site.
+              %li Advance: Get the "message" of admin(this is hard).
+              %li{:style => "color:#f00;"} Don't delete the admin acount
+        %section
+          %h1 中場休息 10min
+        %section
+          %section
+            %h1 數位鑑識
+          %section
+            %h1 檔案辨識
+            %h2 file
+          %section
+            %h1 破解壓縮檔(明文攻擊)
+            %h2 pkcrack
+          %section
+            %h1 靜態分析
+            %h2 IDA Pro
+          %section
+            %h1 動態分析
+            %h2 Immunity Debug
+        %section
+          %section
+            %h1 讀書會之後的發展
+          %section
+            %h1 時間：
+            %ol
+              %li 星期四晚上 17:30~20:30
+              %li 星期六早上 9:00~12:00
+          %section
+            %h1 三人一組
+            %ol
+              %li Web - 調查:whois, directory traversal 攻擊:sqlmap XSS
+              %li Binary - IDA-Pro, Immunity Debug
+              %li Misc - Wireshark, Burp Suite
+              %li PWN - gdb, BufferOverFlow, ShellCode
+              %li Crypto - AES, RSA, MD5
+              %li NCYU-CTF
+            %p{:style => "color:#f00;"} 注重工具上的操作
+        %section
+          %section
+            %h1 最後...
+          %section
+            %h1 台灣是有法律的
+            %a{"href" => "http://homepage.vghtpe.gov.tw/~ged/top2/top2_31.htm"} 詳見刑法358~363
+          %section
+            %h1.fragment.fade-out 駭客不是當一個壞人
+            %h1.fragment 駭客是一種精神
+        %section
+          %h1 END
+          %p 謝謝大家
+    %script{:src => "../lib/js/head.min.js"}
+    %script{:src => "../js/reveal.js"}
+    :javascript
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+      	progress: true,
+      	history: true,
+      	center: true,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });

@@ -1,0 +1,168 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %title IDA_Pro
+    %meta{:content => "A framework for easily creating beautiful presentations using HTML", :name => "description"}/
+    %meta{:content => "Hakim El Hattab", :name => "author"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "black-translucent", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui", :name => "viewport"}/
+    %link{:href => "../css/reveal.css", :rel => "stylesheet"}/
+    %link#theme{:href => "../css/theme/white.css", :rel => "stylesheet"}/
+    / Code syntax highlighting
+    %link{:href => "../lib/css/zenburn.css", :rel => "stylesheet"}/
+    / Printing and PDF exports
+    :javascript
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    /[if lt IE 9]
+      <script src="lib/js/html5shiv.js"></script>
+  %body
+    .reveal
+      / Any section element inside of this container is displayed as a slide
+      .slides
+        %section
+          %section
+            %h1 IDA_Pro
+            %p 2015.11.16
+            %p 廖子慶,郭效凡,簡育昕
+            %p 指導老師:陳宗和
+          %section
+            %h1
+              %ol
+                %li 正向 v.s. 逆向
+                %li IDA_Pro
+          %section
+            %h1 setting
+            %a{:href => "?transition=none#/transitions"} None
+            \-
+            %a{:href => "?transition=fade#/transitions"} Fade
+            \-
+            %a{:href => "?transition=slide#/transitions"} Slide
+            \-
+            %a{:href => "?transition=convex#/transitions"} Convex
+            \-
+            %a{:href => "?transition=concave#/transitions"} Concave
+            \-
+            %a{:href => "?transition=zoom#/transitions"} Zoom
+            %p
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/black.css'); return false;"} Black
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/white.css'); return false;"} White
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/league.css'); return false;"} League
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/sky.css'); return false;"} Sky
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/beige.css'); return false;"} Beige
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/simple.css'); return false;"} Simple
+            %br/
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/serif.css'); return false;"} Serif
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/blood.css'); return false;"} Blood
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/night.css'); return false;"} Night
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/moon.css'); return false;"} Moon
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/solarized.css'); return false;"} Solarized
+        %section
+          %section
+            %h1 正向 v.s. 逆向
+          %section
+            %h1 正向
+            %p 程式碼->組合語言->執行檔
+            %p compiler->assmbler
+          %section
+            %h1 逆向
+            %p 執行檔->組合語言->程式碼
+            %p deassmbler->decompiler
+          %section
+            %h1 deassmbler
+            %p
+              根據
+              %span{:style => "color:#f00;"}不同的環境
+              將執行檔還原成組合語言
+          %section
+            %h1 decompiler
+            %p 將組合語言轉換成高階語言(C)
+        %section
+          %section
+            %h1 Ida_pro
+            %img{"data-src" => "logo.jpg"}
+          %section
+            %h1 支援多種環境
+            %p dos, win_pe, linux, arm...
+            %img{"data-src" => "env.png"}
+          %section
+            %h2 主要畫面
+            %div.fragment{:style => "color:#f00;position:absolute;top:70px;left:5px;width:200px;height:450px;border-width:3px;border-style:dashed;border-color:#f00;padding:5px;"}
+              function區
+            %div.fragment{:style => "color:#00f;position:absolute;top:120px;left:230px;width:600px;height:400px;border-width:3px;border-style:dashed;border-color:#00f;padding:5px;"}
+              assemble區
+            %img{"data-src" => "demo.png"}
+          %section
+            %h2 圖形化程序流程
+            %img{"data-src" => "img.png"}
+          %section
+            %h2 甚至還能直接decomplier
+            %img{"data-src" => "decompiler.png"}
+          %section
+            %h2 demo
+            %pre
+              %code
+                = preserve do
+                  :escaped
+                    #include <stdio.h>
+                    void main(){
+                        int key;
+                        while(1){
+                            printf("Enter a key to use this program:");
+                            scanf("%d",&key);
+                            if(key==2048)
+                                break;
+                            else
+                                printf("Error\n");
+                        }
+                        printf("Good login success!");
+                    }
+            %img{"data-src" => "de.png", "width" => "50%"}
+        %section
+          %h1 結論
+          %p 能執行的檔案都有被反組譯(編譯)的可能
+          %p{:style => "color:#f00;"}
+            也有許多方法對付反組譯
+          %p.fragment{:style => "color:#f00;"}
+            不要隨意地交出你的exe
+        %section
+          %h1 END
+          %p 謝謝大家
+    %script{:src => "../lib/js/head.min.js"}
+    %script{:src => "../js/reveal.js"}
+    :javascript
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+      	progress: true,
+      	history: true,
+      	center: true,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });

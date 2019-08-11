@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>Preparation</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/night.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          #Preparation
+
+          廖子慶  
+          2016/03/07 <!-- .element: align="right" -->
+
+          --
+
+          ##安裝環境
+
+          * VMware Fusion
+          * lubuntu
+          * vim
+          * gcc
+          * nasm
+          * binutils
+          * git
+          * gdb (peda)
+          * pip
+          * ipython
+          * pwntools
+
+          ---
+
+          #VMware Fusion
+
+          --
+
+          就是一套VM軟體
+          現場有準備下載好的
+
+          [ Download ]( https://www.vmware.com/tw/products/fusion/fusion-evaluation.html ) <!-- .element: target="blank" -->
+
+          --
+
+          ~~序號請去路邊撿~~ <!-- .element: style="color:#000;" -->
+
+          ---
+
+          #lubuntu
+
+          輕量級的ubuntu
+
+          --
+
+          今天有準備裝好的OVF(ctf::ctf)  
+          不過還是要來看一下需要做哪些事情
+
+          [Download](http://cdimage.ubuntu.com/lubuntu/releases/15.10/release/lubuntu-15.10-desktop-amd64.iso)
+
+          安裝後第一件事
+
+          ```sh
+          sudo apt-get update
+          ```
+
+          --
+
+          #關閉休眠
+
+          ![](./off.jpg) <!-- .element: width="80%"-->
+
+          --
+
+          #安裝VM套件
+
+          * 解析度
+          * 方便複製貼上
+
+          ![](./vmtool.jpg) <!-- .element: width="80%"-->
+
+          --
+
+          解壓縮到/tmp
+
+          ![](./totmp.jpg) <!-- .element: width="60%"-->
+
+          ```sh
+          sudo /tmp/vmware-tools-distrib/vmware-install.pl
+          ```
+          第一個yes 其他default  
+          重開機
+
+          --
+
+          #[複習連結](http://duckll.github.io/slides/2015/vm_kali_linux/#/3) <!-- .element: target="blank"-->
+
+          ---
+
+          #vim
+          最強大的編輯器
+
+          --
+
+          #Install
+          ```sh
+          sudo apt-get install vim
+          ```
+
+          ##[複習連結](http://duckll.github.io/slides/2015/vm_kali_linux/#/5) <!-- .element: target="blank"-->
+
+          ---
+
+          #gcc
+
+          [不只是Compiler](http://www.slideshare.net/jserv/how-a-compiler-works-gnu-toolchain)
+
+          --
+
+          #Install
+          ```sh
+          sudo apt-get install gcc-multilib
+          ```
+
+          --
+
+          #基本指令
+
+          ```sh
+          gcc [option] file.c
+          ```
+
+          * -o [name] 指定輸出檔名(default:"a.out")
+          * -g Debug Mode(包入source code)
+          * -m32 使用32bit格式
+          * -fno-stack-protector 關閉Overflow保護
+          * -z execstack 關閉DEP保護
+          * -O[0-2]{1} 程式碼最佳化(default:O2)
+
+          ---
+
+          #nasm
+          Assembler
+
+          --
+
+          #Install
+          ```sh
+          sudo apt-get install nasm
+          ```
+
+          --
+
+          #基本指令
+
+          ```sh
+          nasm [option] file.s
+          ```
+
+          * -f [type] (elf32,win32...) 輸出檔案格式(必要)
+          * -o [name] 指定輸出檔名
+          * -g Debug Mode
+          * -O[0-2]{1} 程式碼最佳化(default:O2)
+
+          --
+
+          ##輸出的檔案是relocatable無法執行
+
+          ---
+
+          #binutils
+
+          ##Include
+          * ld
+          * objdump
+          * readelf
+          * strings
+          * MORE...
+
+          --
+
+          ##Install
+
+          ```sh
+          sudo apt-get install binutils
+          ```
+
+          --
+
+          ##之後ELF課會詳細介紹
+
+          ---
+
+          #git
+          版本控制軟體
+
+          --
+
+          #Install
+          ```sh
+          sudo apt-get install git
+          ```
+
+          --
+
+          ##這邊主要是為了方便安裝許多軟體
+          ##這需要[花30天才學得會](https://github.com/doggy8088/Learn-Git-in-30-days) <!-- .element: target="blank"-->
+
+          ---
+
+          #gdb (peda)
+          Debugger
+
+          --
+
+          #Install
+
+          ```sh
+          sudo apt-get install gdb
+          ```
+
+          --
+
+          ##peda plugin
+
+          ```sh
+          git clone https://github.com/longld/peda.git ~/peda
+          echo "source ~/peda/peda.py" >> ~/.gdbinit
+          ```
+
+          ---
+
+          #pip
+          python plugin manager
+
+          --
+
+          #Install
+          ```sh
+          sudo apt-get install python-setuptools
+          sudo easy_install pip
+          ```
+
+          ---
+
+          #iPython
+          Interactive Python
+
+          --
+
+          #Install
+
+          ```sh
+          sudo pip install ipython
+          ```
+
+          "sudo" is not a good method but a quick method to install plugins  
+          This is vm so we don't need to care about it.
+
+          ---
+
+          #pwntools
+          CTF Framework
+
+          --
+
+          #Install
+
+          ```sh
+          sudo apt-get install python-dev
+          sudo pip install pwntools
+          sudo pip install --upgrade capstone
+          ```
+
+          ---
+
+          #最後
+
+          --
+
+          #之後如果有CTF
+
+          會在社團公布帳號密碼大家一起參加  
+          比賽期間我會跟大家討論題目跟方向  
+          就算不會解題 也要去看題目！  
+          方便之後講Writeup
+
+          --
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

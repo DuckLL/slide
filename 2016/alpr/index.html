@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>OpenALPR</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/night.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          #OpenALPR
+
+          廖子慶、施奕帆  
+          2016/06/23 <!-- .element: align="right" -->
+
+          ---
+
+          #OpenALPR
+
+          http://www.openalpr.com/
+
+          --
+
+          #簡介
+
+          OpenALPR由C++, C#, Java, Node.js 構成  
+          主要的功能是辨識車牌
+
+          --
+
+          #Source Code
+
+          https://github.com/openalpr/openalpr
+
+          ---
+
+          #建置過程
+
+          --
+
+          #系統環境
+
+          Ubuntu 15.10
+
+          ```sh
+          $ uname -a
+          Linux duckll-vm 4.2.0-16-generic #19-Ubuntu SMP Thu Oct 8 15:35:06 UTC 2015  \
+          x86_64 x86_64 x86_64 GNU/Linux
+          ```
+
+          --
+
+          #安裝步驟
+          ```sh
+          #更新軟體清單
+          sudo apt-get update
+
+          #安裝需要的程式、函式庫
+          sudo apt-get install libopencv-dev libtesseract-dev git cmake
+          sudo apt-get install build-essential libleptonica-dev liblog4cplus-dev libcurl3-dev
+          sudo apt-get install beanstalkd
+
+          #下載Source Code
+          git clone https://github.com/openalpr/openalpr.git
+
+          #建立build資料夾
+          cd openalpr/src
+          mkdir build
+          cd build
+
+          #設定編譯參數
+          cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_INSTALL_SYSCONFDIR:PATH=/etc ..
+
+          #編譯程式
+          make
+
+          #安裝到系統上
+          sudo make install
+          ```
+
+          ---
+
+          #測試
+
+          --
+
+          #使用方法
+
+          ```sh
+          $ alpr --help
+
+          USAGE: 
+
+             alpr  [-c <country_code>] [--config <config_file>] [-n <topN>] [--seek
+                   <integer_ms>] [-p <pattern code>] [--clock] [-d] [-j] [--]
+                   [--version] [-h] <image_file_path>
+
+
+          Where: 
+
+             -c <country_code>,  --country <country_code>
+               Country code to identify (either us for USA or eu for Europe). 
+               Default=us
+
+             --config <config_file>
+               Path to the openalpr.conf file
+
+             -n <topN>,  --topn <topN>
+               Max number of possible plate numbers to return.  Default=10
+
+             --seek <integer_ms>
+               Seek to the specified millisecond in a video file. Default=0
+
+             -p <pattern code>,  --pattern <pattern code>
+               Attempt to match the plate number against a plate pattern (e.g., md
+               for Maryland, ca for California)
+
+             --clock
+               Measure/print the total time to process image and all plates. 
+               Default=off
+
+             -d,  --detect_region
+               Attempt to detect the region of the plate image.  [Experimental] 
+               Default=off
+
+             -j,  --json
+               Output recognition results in JSON format.  Default=off
+
+             --,  --ignore_rest
+               Ignores the rest of the labeled arguments following this flag.
+
+             --version
+               Displays version information and exits.
+
+             -h,  --help
+               Displays usage information and exits.
+
+             <image_file_path>
+               Image containing license plates
+
+
+             OpenAlpr Command Line Utility
+          ```
+
+          --
+
+          ![](./1.jpg) <!-- .element: width="50%" -->
+          車牌區域小
+
+          ```sh
+          $ alpr 1.jpg
+          plate0: 10 results
+              - 932HS      confidence: 88.7739
+              - 9732HS     confidence: 87.406
+              - 932H8      confidence: 77.8572
+              - 9732H8     confidence: 76.4893
+              - S32HS      confidence: 75.9105
+              - 932MS      confidence: 75.0041
+              - S732HS     confidence: 74.5426
+              - 32HS       confidence: 74.2219
+              - 9732MS     confidence: 73.6362
+              - 732HS      confidence: 72.854
+          ```
+
+          --
+
+          ![](./2.jpg) <!-- .element: width="30%" -->
+          一次兩台車
+
+          ```sh
+          $ alpr 2.jpg
+          plate0: 10 results
+              - BK3736     confidence: 84.8323
+              - BK336      confidence: 84.6609
+              - BK373G     confidence: 84.1466
+              - BK33G      confidence: 83.9752
+              - HK3736     confidence: 81.8763
+              - HK336      confidence: 81.7049
+              - HK373G     confidence: 81.1907
+              - HK33G      confidence: 81.0193
+              - BK373B     confidence: 80.87
+              - BK33B      confidence: 80.6987
+          plate1: 10 results
+              - AK1862     confidence: 87.283
+              - AQK1862    confidence: 86.5028
+              - AKI862     confidence: 86.2679
+              - AQKI862    confidence: 85.4877
+              - A9K1862    confidence: 81.9859
+              - AOK1862    confidence: 81.9152
+              - A9KI862    confidence: 80.9709
+              - AOKI862    confidence: 80.9001
+              - ABK1862    confidence: 80.4563
+              - ADK1862    confidence: 79.5362
+          ```
+
+          --
+
+          ![](./3.jpg) <!-- .element: width="50%" -->
+          綠底白字
+
+          ```sh
+          $ alpr 3.jpg
+          No license plates found.
+          ```
+
+          --
+
+          ![](./4.jpg) <!-- .element: width="30%" -->
+          json 格式
+
+          ```sh
+          duckll@duckll-vm:~/rd/0/Photos$ alpr -j 4.jpg
+          {
+              "version": 2,
+              "data_type": "alpr_results",
+              "epoch_time": 1465013323764,
+              "img_width": 3200,
+              "img_height": 2400,
+              "processing_time_ms": 649.754333,
+              "regions_of_interest": [],
+              "results": [
+                  {
+                      "plate": "AEN5250",
+                      "confidence": 91.270035,
+                      "matches_template": 0,
+                      "plate_index": 0,
+                      "region": "",
+                      "region_confidence": 0,
+                      "processing_time_ms": 19.052929,
+                      "requested_topn": 10,
+                      "coordinates": [
+                          {
+                              "x": 1295,
+                              "y": 1008
+                          },
+                          {
+                              "x": 2347,
+                              "y": 1091
+                          },
+                          {
+                              "x": 2297,
+                              "y": 1610
+                          },
+                          {
+                              "x": 1244,
+                              "y": 1526
+                          }
+                      ],
+                      "candidates": [
+                          {
+                              "plate": "AEN5250",
+                              "confidence": 91.270035,
+                              "matches_template": 0
+                          },
+                          {
+                              "plate": "AEN525O",
+                              "confidence": 88.625923,
+                              "matches_template": 0
+                          },
+                          {
+                              "plate": "AEN525I",
+                              "confidence": 88.576286,
+                              "matches_template": 0
+                          },
+                          {
+                              "plate": "AEN525D",
+                              "confidence": 88.505623,
+                              "matches_template": 0
+                          },
+                          {
+                              "plate": "AEN525Q",
+                              "confidence": 88.463974,
+                              "matches_template": 0
+                          },
+                          {
+                              "plate": "AEN5Z50",
+                              "confidence": 88.133263,
+                              "matches_template": 0
+                          },
+                          {
+                              "plate": "AEN525B",
+                              "confidence": 87.699951,
+                              "matches_template": 0
+                          },
+                          {
+                              "plate": "AEN525U",
+                              "confidence": 87.514725,
+                              "matches_template": 0
+                          },
+                          {
+                              "plate": "AEN5251",
+                              "confidence": 86.524101,
+                              "matches_template": 0
+                          },
+                          {
+                              "plate": "AEN525",
+                              "confidence": 86.104179,
+                              "matches_template": 0
+                          }
+                      ]
+                  }
+              ]
+          }
+          ```
+
+          --
+
+          <video width="480" height="270" controls>
+          <source src="./5.mp4" type="video/mp4">
+          </video>
+
+          影片測試
+
+          ```sh
+          $ alpr 5.mp4
+          Frame: 0
+          plate0: 10 results
+              - 9229LP1    confidence: 91.8101
+              - 9229LPI    confidence: 86.7388
+              - 922BLP1    confidence: 84.2057
+              - B229LP1    confidence: 83.2396
+              - 922SLP1    confidence: 81.5803
+              - 922LP1     confidence: 79.8536
+              - S229LP1    confidence: 79.6494
+              - 229LP1     confidence: 79.2717
+              - 922BLPI    confidence: 79.1345
+              - 9229LF1    confidence: 78.1872
+          Frame: 1
+          plate0: 10 results
+              - 9229       confidence: 90.2368
+              - B229       confidence: 76.3496
+              - 922B       confidence: 75.2986
+              - 92Z9       confidence: 70.0608
+              - S229       confidence: 70.0531
+              - B22B       confidence: 61.4114
+              - B2Z9       confidence: 56.1736
+              - 92ZB       confidence: 55.1226
+              - S22B       confidence: 55.1149
+              - S2Z9       confidence: 49.8771
+          Frame: 2
+          plate0: 10 results
+              - 9229LPU    confidence: 90.3065
+              - 9229LP     confidence: 90.259
+              - 9229LPH    confidence: 89.4256
+              - 9229LPM    confidence: 86.0802
+              - 9229LPD    confidence: 84.6574
+              - 9229LPO    confidence: 84.6519
+              - 9229LPN    confidence: 84.601
+              - 9229LP0    confidence: 83.5712
+              - 9229LPB    confidence: 83.3942
+              - 9229LPQ    confidence: 82.9686
+
+          ...
+
+          Frame: 134
+          plate0: 10 results
+              - 9229LP     confidence: 91.5733
+              - 922BLP     confidence: 83.1986
+              - 922SLP     confidence: 80.2646
+              - S229LP     confidence: 80.1752
+              - 929LP      confidence: 78.845
+              - 92B9LP     confidence: 78.8197
+              - 922LP      confidence: 78.1369
+              - 229LP      confidence: 76.9334
+              - 9229LF     confidence: 75.0721
+              - S22BLP     confidence: 71.8005
+          Frame: 135
+          plate0: 10 results
+              - 9229LP     confidence: 92.321
+              - S229LP     confidence: 82.6596
+              - 922BLP     confidence: 81.1862
+              - 922SLP     confidence: 80.8922
+              - 229LP      confidence: 79.6934
+              - 9229LF     confidence: 78.0252
+              - S22BLP     confidence: 71.5248
+              - S22SLP     confidence: 71.2308
+              - 22BLP      confidence: 68.5586
+              - S229LF     confidence: 68.3638
+          ```
+
+          ---
+
+          #心得
+
+          * OpenALPR提供非常友善的安裝文件，讓使用者可以輕鬆建置  
+          * 能將<span style="color:#0f0;">影片轉為照片</span>辨識非常的方便  
+          * 但能依據<span style="color:#ff0">國家偵測的設定偏少</span>(au,auwide,eu,gb,kr,kr2,mx,sg,us)  
+          * 只能辨別<span style="color:#000;background-color:#fff;">白底黑字</span>算是比較可惜的地方  
+          * 但整體來說還是<span style="color:#f00">非常強大！</span>
+
+          --
+
+          #End
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

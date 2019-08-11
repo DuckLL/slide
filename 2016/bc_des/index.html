@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>Block Chipher & DES</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/serif.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          ##Block Chipher & DES
+
+          廖子慶  
+          2016/07/14 <!-- .element: align="right" -->
+
+          ---
+
+          ##Block Chipher
+
+          --
+
+          ##Block Chipher v.s.
+          ##Stream Chipher
+          ![](./bc1.jpg)
+
+          --
+
+          #Motivation
+
+          ##Reversible Mapping
+          ##(1 by 1 function)
+
+          | Reversible |     |  | Irreversible |     |
+          |    ---     | --- |  |     ---      | --- |
+          |     00     | 11  |  |      00      | 11  |
+          |     01     | 10  |  |      01      | 10  |
+          |     10     | 00  |  |      10      | 01  |
+          |     11     | 01  |  |      11      | 01  |
+
+          --
+
+          ##The Feistel Cipher
+
+          ###Diffustion
+          The statistical structure of the plaintext is dissipated into long range statistics of the ciphertext
+
+          ###Confustion
+          Makes relationship between ciphertext and key as complex as possible
+
+          --
+
+          ##Feistel Cipher Design Principles
+
+          * Block size
+          * Key size
+          * Number of rounds
+          * Subkey generation
+          * Round funtion
+          * Fast software encryption/decryption
+          * Ease of analysis
+
+          --
+
+          ###Feistel Encryption And Decryption
+
+          ![](./bc2.jpg) <!-- .element: width="40%" -->
+
+          ---
+
+          #DES
+
+          --
+
+          ##General Depiction
+
+          ![](./des1.jpg)
+
+          --
+
+          ##Detail Of Single Round
+          ![](./des2.jpg)<!-- .element: width="80%" -->
+
+          --
+
+          ##Expansion
+
+          ![](./des4.jpg)<!-- .element: width="40%" -->
+
+          --
+
+          ##Calculation of F(R, K)
+          ![](./des3.jpg)<!-- .element: width="80%" -->
+
+          --
+
+          ##S-box
+          ![](./des6.jpg)
+
+          ex: 011001 -> row 01, column 1100 -> 9
+
+          --
+
+          ##Permutation
+          ![](./des5.jpg)
+
+          --
+
+          ##Key Generation
+          ![](./des7.jpg)<!-- .element: width="40%" -->
+          ![](./des8.jpg)<!-- .element: width="40%" -->
+
+
+          ---
+
+          ##The Strength of DES
+
+          --
+
+          ##The Use of 56-Bit KeysA
+
+          * Key size = 2^56 ≒ 7.2*10^16
+          * DES finally and definitively proved insecure in July 1998.
+          * 3-DES,AES
+
+          ---
+
+          ###Differential and Linear Cryptanalysis
+
+          --
+
+          ##Differential Cryptanalysis
+          Can successfully cryptanalyze DES with an effort on the order of 2^47 encryptions.
+
+          --
+
+          ##Linear Cryptanalysis
+          This method can find a DES key given 2^43 known plaintexts, as compared to 2^47 chosen plaintexts for differential cryptanalysis.
+
+          ---
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>BOF</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/night.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          #Buffer Overflow
+
+          廖子慶  
+          2016/05/09 <!-- .element: align="right" -->
+
+          ---
+
+          #原理講解
+
+          --
+
+          ![](./stack.png)
+
+          --
+
+          #正常狀況
+
+          | |
+          | --- | --- |
+          | local variable | buffer
+          | last $ebp |
+          | return address | $eip
+          | |
+
+          --
+
+          #溢位狀況
+
+          | |
+          | --- | --- |
+          | local variable | buffer
+          | last $ebp | buffer
+          | any address | buffer
+          | |
+
+          --
+
+          #可能發生的原因
+
+          1. gets
+          1. strcpy
+          1. etc...
+
+          --
+
+          #防禦的要點
+
+          1. 限制輸入的長度
+          1. DEP
+          1. ASLR
+
+          ---
+
+          #DEP
+          write^execute==1
+
+          --
+
+          ##關閉
+          ```sh
+          gcc -fno-stack-protector -z execstack
+          ```
+
+          --
+
+          #影響
+
+          ##不能使用shellcode
+
+          --
+
+          #對應
+
+          ##使用ROP
+
+          ---
+
+          #ASLR
+          random address
+
+          --
+
+          #關閉
+          ```sh
+          echo 0 > /proc/sys/kernel/randomize_va_space
+          ```
+
+          --
+
+          #影響
+
+          ##無法跳躍到想要的位置
+
+          --
+
+          #對應
+
+          ##先leak 後exploit
+          ##return to text
+
+          ---
+
+          #小技巧
+
+          1. cyclic + cyclic_find
+          1. ret slide
+          1. nop slide
+
+
+          ---
+
+          #LV1
+          #return to function
+
+          --
+
+          #達成的條件
+
+          #無
+
+          --
+
+          #Code
+
+          ```c
+          #include <stdio.h>
+          void bof()
+          {
+              char buf[87];
+              gets(buf);
+              puts(buf);
+              return;
+          }
+          void getshell()
+          {
+              system("/bin/sh");
+              return;
+          }
+          int main(int argc, const char *argv[])
+          {
+              bof();
+              return 0;
+          }
+          ```
+
+          ---
+
+          #LV2
+          #injection shellcode
+
+          --
+
+          #達成的條件
+
+          #DEP off
+          #ASLR off
+
+          --
+
+          #Code
+
+          ```c
+          #include <stdio.h>
+          void bof()
+          {
+              char buf[87];
+              gets(buf);
+              puts(buf);
+              return;
+          }
+          int main(int argc, const char *argv[])
+          {
+              bof();
+              return 0;
+          }
+          ```
+
+          ---
+
+          #LV3
+          #ASLR bypass with return to text
+
+          --
+
+          #達成的條件
+
+          #DEP off
+
+          --
+
+          透過再次呼叫gets()並設定輸入的位置(使用bss段而不是stack上)
+          讓每次的輸入位置都固定 就可以避免跳錯位置
+
+          --
+
+          #Code
+
+          ```c
+          #include <stdio.h>
+          void bof()
+          {
+              char buf[87];
+              gets(buf);
+              puts(buf);
+              return;
+          }
+          int main(int argc, const char *argv[])
+          {
+              bof();
+              return 0;
+          }
+          ```
+
+          ---
+
+          #LV4
+          #DEP bypass with ROP(function)
+
+          --
+
+          #達成的條件
+
+          ##程式有可利用的function跟字串
+
+          ```
+          payload=padding+system()+exit()+'/bin/sh\x00'
+          ```
+
+          --
+
+          #Code
+
+          ```c
+          #include <stdio.h>
+          void bof()
+          {
+              char buf[87];
+              gets(buf);
+              puts(buf);
+              return;
+          }
+          int main(int argc, const char *argv[])
+          {
+              system("ls");
+              puts("/bin/sh");
+              bof();
+              exit();
+              return 0;
+          }
+          ```
+
+          ---
+
+          #LV5
+          #DEP bypass with ROP(gadget)
+
+          --
+
+          #達成的條件
+
+          #程式夠大(靜態載入)有足夠的gadget
+          ```sh
+          gcc -static
+          ```
+
+          --
+
+          ###所謂的gadget就是斷章取義
+          ###利用程式中的pop $e?x;ret;
+          ###來設定register的值
+
+          ---
+
+          #LV6
+          #Return 2 lib
+          #Exploit after leak
+
+          --
+
+          #達成的條件
+
+          #無
+
+          --
+
+          #Payload
+
+          leak
+
+          ```
+          padding+puts_plt+main+put_got
+          ```
+
+          calculate offset
+          ```
+          base = u32(r.recvline()[:4]) - puts_off
+          system = base+system_off
+          gets = base + gets_off
+          ```
+
+          exploit
+
+          ```
+          padding+get+system+bss+bss
+          ```
+
+          --
+
+          #Code
+
+          ```c
+          #include <stdio.h>
+          void bof()
+          {
+              char buf[40];
+              fflush(stdout);//輸入前強制輸出
+              gets(buf);
+              return;
+          }
+          int main(int argc, const char *argv[])
+          {
+              puts("puts done~");
+              bof();
+              return 0;
+          }
+          ```
+
+          ---
+
+          #LV7
+          #ROP Combo
+          要做很多事情 不要每次都從main開始exploit
+
+          ---
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

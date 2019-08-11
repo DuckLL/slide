@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>Android Week2</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/serif.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          #Android Week2
+
+          廖子慶  
+          2016/07/14 <!-- .element: align="right" -->
+
+          ---
+
+          ##layout & id
+          ##Configuration
+
+          --
+
+          ![](./main.png)<!-- .element: width="30%" -->
+          ![](./second.png)<!-- .element: width="30%" -->
+
+          ---
+
+          ##Get Value via Bundle
+
+          --
+
+          ##MainActivity
+
+          ```java
+          private Button.OnClickListener MyListner= new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+              switch (v.getId()){
+                case R.id.bundle:{
+                  Intent intent=new Intent();
+                  intent.setClass(MainActivity.this,Second.class);
+                  Bundle bundle=new Bundle();
+                  bundle.putDouble("height",Double.valueOf(height.getText().toString()));
+                  bundle.putDouble("weight",Double.valueOf(weight.getText().toString()));
+                  intent.putExtras(bundle);
+                  startActivity(intent);
+                  break;
+                  }
+                case R.id.globalvariable:{
+                  ...
+                }
+              }
+            }
+          };
+          ```
+
+          --
+
+          ##Second
+
+          ```java
+          //get value by bundle
+          try{
+            Intent intent=this.getIntent();
+            Bundle bundle=intent.getExtras();
+            Double bd_height=bundle.getDouble("height");
+            Double bd_weight=bundle.getDouble("weight");
+            //calculate
+            Double bd_bmi=bd_weight/Math.pow((bd_height/100),2);
+            //set text
+            TextView bd_text=(TextView)findViewById(R.id.bmi_bd);
+            bd_text.setText(bd_bmi.toString());
+          }catch (Exception e){};
+          ```
+
+          ---
+
+          ##Get Value via GlobalVariable
+
+          --
+
+          ##MainActivity
+
+          ```java
+          public static Double gv_height;
+          public static Double gv_weight;
+          private Button.OnClickListener MyListner= new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+              switch (v.getId()){
+                case R.id.bundle:{
+                  ...
+                  }
+                case R.id.globalvariable:{
+                  Intent intent=new Intent();
+                  intent.setClass(MainActivity.this,Second.class);
+                  gv_height=Double.valueOf(height.getText().toString());
+                  gv_weight=Double.valueOf(weight.getText().toString());
+                  startActivity(intent);
+                  break;
+                }
+              }
+            }
+          };
+          ```
+
+          --
+
+          ##Second
+
+          ```java
+          //get value by globalvariable
+          try{
+            Double gv_height=MainActivity.gv_height;
+            Double gv_weight=MainActivity.gv_weight;
+            //calculate
+            Double gv_bmi=gv_weight/Math.pow((gv_height/100),2);
+            //set text
+            TextView gv_text=(TextView)findViewById(R.id.bmi_gv);
+            gv_text.setText(gv_bmi.toString());
+          }catch (Exception e){};
+          ```
+
+          ---
+
+          #DEMO
+
+          --
+
+          <iframe width="1024" height="768" src="https://www.youtube.com/embed/ngukAFyJIVY" frameborder="0" allowfullscreen></iframe>
+
+          ---
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

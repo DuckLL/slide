@@ -1,0 +1,158 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %title Web Security
+    %meta{:content => "A framework for easily creating beautiful presentations using HTML", :name => "description"}/
+    %meta{:content => "Hakim El Hattab", :name => "author"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "black-translucent", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui", :name => "viewport"}/
+    %link{:href => "../css/reveal.css", :rel => "stylesheet"}/
+    %link#theme{:href => "../css/theme/night.css", :rel => "stylesheet"}/
+    / Code syntax highlighting
+    %link{:href => "../lib/css/zenburn.css", :rel => "stylesheet"}/
+    / Printing and PDF exports
+    :javascript
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    /[if lt IE 9]
+      <script src="lib/js/html5shiv.js"></script>
+  %body
+    .reveal
+      / Any section element inside of this container is displayed as a slide
+      .slides
+        %section
+          %section
+            %h1 Web Security
+            %p 2015.11.26
+            %p 廖子慶
+          %section
+            %h1
+              %ol
+                %li Web攻擊流程
+                %li 搜集
+                %li 掃描
+                %li 取得權限
+          %section
+            %h1 setting
+            %a{:href => "?transition=none#/transitions"} None
+            \-
+            %a{:href => "?transition=fade#/transitions"} Fade
+            \-
+            %a{:href => "?transition=slide#/transitions"} Slide
+            \-
+            %a{:href => "?transition=convex#/transitions"} Convex
+            \-
+            %a{:href => "?transition=concave#/transitions"} Concave
+            \-
+            %a{:href => "?transition=zoom#/transitions"} Zoom
+            %p
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/black.css'); return false;"} Black
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/white.css'); return false;"} White
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/league.css'); return false;"} League
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/sky.css'); return false;"} Sky
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/beige.css'); return false;"} Beige
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/simple.css'); return false;"} Simple
+            %br/
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/serif.css'); return false;"} Serif
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/blood.css'); return false;"} Blood
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/night.css'); return false;"} Night
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/moon.css'); return false;"} Moon
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/solarized.css'); return false;"} Solarized
+        %section
+          %h2 駭客攻擊Web流程
+          %ol
+            %li 偵查
+            %li 掃描
+            %li 獲得權限
+            %li 提升權限
+            %li 清除痕跡
+        %section
+          %section
+            %h1 偵查
+          %section
+            %h1 Whois
+          %section
+            %h1 Robots.txt
+          %section
+            %h1
+              %a{"href" => "http://archive.org", "target" => "blank"} Archive.org
+          %section
+            %h1 直接尋找CVE
+            %ol
+              %li Moodle
+              %li Wordpress
+              %li Discuz
+        %section
+          %section
+            %h1 掃描
+          %section
+            %h1 Netsparker
+            %h1 AWVS9
+        %section
+          %h1 中場休息
+        %section
+          %section
+            %h1 獲得權限
+          %section
+            %h1 ZAP
+            %p proxy
+            %p 127.0.0.1:8080
+          %section
+            %h1 Sqlmap
+            %p base on python
+          %section
+            %h1 測試可能性
+            %p sqlmap -r $raw -p "$p1"
+          %section
+            %h1 找出資料庫
+            %p sqlmap -r $raw -p "$p1" -v 1 --dbs
+          %section
+            %h1 找出資料表
+            %p sqlmap -r $raw -p "$p1" -v 1 -D $db_name --table
+          %section
+            %h1 找出欄位
+            %p sqlmap -r $raw -p "$p1" -v 1 -D $db_name -T $tb_name --columns -v 1
+          %section
+            %h1 選擇要顯示的欄位
+            %p sqlmap -r $raw -p "$p1" -v 1 -D $db_name -T $tb_name -C "$col1,$col2,..." --dump -v 1
+        %section
+          %h1 END
+          %p 謝謝大家
+    %script{:src => "../lib/js/head.min.js"}
+    %script{:src => "../js/reveal.js"}
+    :javascript
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+      	progress: true,
+      	history: true,
+      	center: true,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });

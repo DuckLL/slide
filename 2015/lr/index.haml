@@ -1,0 +1,214 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %title NCYU_LTPC
+    %meta{:content => "A framework for easily creating beautiful presentations using HTML", :name => "description"}/
+    %meta{:content => "Hakim El Hattab", :name => "author"}/
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
+    %meta{:content => "black-translucent", :name => "apple-mobile-web-app-status-bar-style"}/
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui", :name => "viewport"}/
+    %link{:href => "../css/reveal.css", :rel => "stylesheet"}/
+    %link#theme{:href => "../css/theme/night.css", :rel => "stylesheet"}/
+    / Code syntax highlighting
+    %link{:href => "../lib/css/zenburn.css", :rel => "stylesheet"}/
+    / Printing and PDF exports
+    :javascript
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    /[if lt IE 9]
+      <script src="lib/js/html5shiv.js"></script>
+  %body
+    .reveal
+      / Any section element inside of this container is displayed as a slide
+      .slides
+        %section
+          %section
+            %h1 數位暗房
+            %h2 -沒有最好只有更好
+            %p 2015.11.5
+            %p 廖子慶
+          %section
+            %h1
+              %ol
+                %li 數位底片
+                %li LightRoom
+          %section
+            %h1 setting
+            %a{:href => "?transition=none#/transitions"} None
+            \-
+            %a{:href => "?transition=fade#/transitions"} Fade
+            \-
+            %a{:href => "?transition=slide#/transitions"} Slide
+            \-
+            %a{:href => "?transition=convex#/transitions"} Convex
+            \-
+            %a{:href => "?transition=concave#/transitions"} Concave
+            \-
+            %a{:href => "?transition=zoom#/transitions"} Zoom
+            %p
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/black.css'); return false;"} Black
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/white.css'); return false;"} White
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/league.css'); return false;"} League
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/sky.css'); return false;"} Sky
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/beige.css'); return false;"} Beige
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/simple.css'); return false;"} Simple
+            %br/
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/serif.css'); return false;"} Serif
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/blood.css'); return false;"} Blood
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/night.css'); return false;"} Night
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/moon.css'); return false;"} Moon
+            \-
+            %a{:href => "#", :onclick => "document.getElementById('theme').setAttribute('href','../css/theme/solarized.css'); return false;"} Solarized
+        %section
+          %section
+            %h1 數位底片
+            %h2 認識RAW檔
+          %section
+            %h1 raw常見的格式
+            %table
+              %thead
+                %tr
+                  %th 廠商
+                  %th 副檔名
+              %tbody
+                %tr
+                  %td Nikon
+                  %td NEF
+                %tr
+                  %td Canon
+                  %td CR2
+                %tr
+                  %td Sony
+                  %td ARW
+                %tr
+                  %td Adobe
+                  %td DNG
+          %section
+            %h2
+              RAW儲存的是
+              %span{:style => "color:#f00;"} 光(電子)訊號
+            %h2
+              圖檔儲存的
+              %span{:style => "color:#f00;"} 色彩資訊
+          %section
+            %h2 電子訊號的轉換
+            %h2
+              %p 是我可以控制的
+              %ol
+                %li 色溫
+                %li 色調
+                %li 飽和度
+                %li 銳利度
+                %li ......
+          %section
+            %h2 最常舉例的狀況：色溫
+            %img{"data-src" => "org.jpg"}
+          %section
+            %div{:style => "float:left;width:50%;"}
+              %h1 raw
+              %img{"data-src" => "raw.jpg"}
+            %div{:style => "float:right;width:50%;"}
+              %h1 jpg
+              %img{"data-src" => "jpg.jpg"}
+          %section
+            %h1
+              %p 決定RAW檔
+              %ol
+                %li 光圈
+                %li 快門
+                %li iso
+        %section
+          %section
+            %h1 LightRoom
+          %section
+            %h1 色階分佈圖
+            %img{"data-src" => "color.jpg"}
+          %section
+            %h1 色彩概念
+            %img{"data-src" => "rgb_cmy.jpg"}
+          %section
+            %h1 補充
+            %div
+              %img{"data-src" => "labcolor.jpg", "width" => "50%"}
+          %section
+            %div{:style => "float:left;width:50%;"}
+              %h1 基礎
+              %ol
+                %li 匯入
+                %li 曝光度
+                %li 對比度
+                %li 色溫
+                %li 飽和度
+                %li 裁切
+                %li 複製貼上
+                %li 儲存
+            %div{:style => "float:right;width:50%;"}
+              %h1 進階
+              %ol
+                %li 減噪
+                %li 單色調整
+                %li 變形抑制
+                %li 紫邊抑制
+                %li 色調曲線
+                %li 漸層濾鏡
+                %li 預設集
+          %section
+            %h1 圖檔常見的格式
+            %table
+              %thead
+                %tr
+                  %th 副檔名
+                  %th 優點
+                  %th 缺點
+              %tbody
+                %tr
+                  %td .jpg
+                  %td 檔案小
+                  %td 細節差、邊緣模糊
+                %tr
+                  %td .png
+                  %td 不失真、網頁可開啟
+                  %td 檔案大
+                %tr
+                  %td .tiff
+                  %td 不失真、後製有利
+                  %td 檔案大、網頁不可開啟
+        %section
+          %h1 END
+          %p 謝謝大家
+    %script{:src => "../lib/js/head.min.js"}
+    %script{:src => "../js/reveal.js"}
+    :javascript
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      	controls: true,
+      	progress: true,
+      	history: true,
+      	center: true,
+
+      	transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+      	// Optional reveal.js plugins
+      	dependencies: [
+      		{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      		{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      		{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      		{ src: '../plugin/zoom-js/zoom.js', async: true },
+      		{ src: '../plugin/notes/notes.js', async: true }
+      	]
+      });
