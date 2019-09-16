@@ -148,3 +148,7 @@ DuckLL
 - build bot without program
 
 ![ifttt](./ifttt.png) <!-- .element: width="60%" -->
+
+---
+
+# Thank You
