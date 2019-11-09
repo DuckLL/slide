@@ -180,3 +180,4 @@
 # English Training
 
 1. [Be a Tool Man](./2019/toolman)
+1. [Exploit Tech](./2019/exploit)
