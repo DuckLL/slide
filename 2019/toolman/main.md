@@ -104,6 +104,7 @@ DuckLL
 
 - markdown editor
 - notebook
+- collaborative writing
 
 ![hackmd](./hackmd.png) <!-- .element: width="80%" -->
 
@@ -139,6 +140,13 @@ DuckLL
 - save great post
 
 ![en](./en.png) <!-- .element: width="60%" -->
+
+--
+
+# Notion
+
+- new service
+- merge HackMD, Evernote, Trello
 
 --
 
